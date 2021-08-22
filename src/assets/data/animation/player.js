@@ -1,0 +1,26 @@
+export default {
+    type:'ANIMATION',
+    maps:{
+        poses:{
+            src:'img/object/player/move.png',
+            offX:0,offY:576,w:32,h:32,
+        },
+        move1:{
+            src:'img/object/player/move.png',
+            offX:0,offY:0,w:32,h:32,
+        },
+        move2:{
+            src:'img/object/player/move.png',
+            xCnt:6,offX:192,offY:320,w:32,h:32,
+        },
+        move3:{
+            src:'img/object/player/move.png',
+            xCnt:16,offX:0,offY:480,w:32,h:32,
+        },
+    },
+    defs:[
+        {
+            map:'move1'
+        }
+    ],
+}

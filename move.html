@@ -1,0 +1,189 @@
+<html>
+    <head>
+
+    </head>
+    <body style="position:relative;margin: 0px;overflow: hidden;">
+
+        <div style="width:100%;height:30px;display:flex;align-items:center;">
+            <div style="margin-right:5px">속도 (ms / pixel)</div><input id="veloInput" type='number'><button onclick='changeVelo()'>속도변경</button>
+        </div>
+        <div id="container" style="width:100%;height:calc(100% - 30px);border:1px solid gray;box-sizing:border-box;">
+            <canvas id='can' width='450' height='640'
+            onclick='move(event)'
+            style="border:1px solid red;box-sizing:border-box;"
+            ></canvas>
+        </div>
+
+        <script>
+
+            const container = document.getElementById('container');
+
+            const can = document.getElementById('can');
+            can.width = container.offsetWidth - 4;
+            can.height = container.offsetHeight - 4;
+
+            const resizeObserver = new ResizeObserver(()=>{
+                can.width = container.offsetWidth - 4;
+                can.height = container.offsetHeight -4;
+            })
+
+            resizeObserver.observe(container);
+
+            const ctx = can.getContext('2d');
+
+            let x = Math.floor((can.width / 2) - 50);
+            let y = Math.floor((can.height / 2) - 75);
+            let x1;
+            let y1;
+
+            let velo = 1; // px / ms
+            document.getElementById('veloInput').value = velo;
+            const changeVelo = ()=>{
+                velo = Number(document.getElementById('veloInput').value);
+            }
+            
+            let movex;
+            let movey;
+
+            let frame = 0;
+            let fps = 0;
+            let fpsPrev = 0;
+            let fpsDelta;
+            
+            let prev = -1;
+            let delta;
+
+            const clear = ()=>{
+                ctx.clearRect(0, 0, can.width, can.height)
+            }
+
+            const rect = ()=>{
+                ctx.fillStyle = 'pink'
+                ctx.fillRect(Math.floor(x), Math.floor(y), 100, 150)
+                ctx.fillStyle = 'black'
+                ctx.fillRect(Math.floor(x) + 50, Math.floor(y) + 75, 3, 3)
+            }
+
+            const fpsText = ()=>{
+                ctx.fillStyle = 'black'
+                ctx.font = '30px serif';
+                ctx.fillText('FPS : '+fps, 5, 30);
+                ctx.fillText('FRAME : '+frame, 5, 70);
+            }
+            
+            const move = (e)=>{
+                movex = undefined;
+                x1 = e.offsetX - 50;
+                y1 = e.offsetY - 75;
+            }
+
+            let dis;
+            let disx;
+            let disy;
+            let currDis;
+            let currDisRatio;
+            let currPassedDis;
+            const update = (gap)=>{
+
+                if(x1 !== undefined && y1 !== undefined){
+
+                    if(movex === undefined){
+
+                        disx = x1 - x;
+                        disy = y1 - y;
+
+                        dis = Math.sqrt(Math.pow(Math.abs(disx), 2) + Math.pow(Math.abs(disy), 2));
+                        currPassedDis = 0;
+
+                    }
+
+                    currDis = gap * velo;
+                    
+                    currPassedDis += currDis;
+                    
+                    if(currPassedDis >= dis){
+                        x = x1;
+                        y = y1;
+                        x1 = undefined;
+                        x2 = undefined;
+                        return;
+                    }
+
+                    currDisRatio = currDis / dis;
+                    
+                    movex = disx * currDisRatio;
+                    movey = disy * currDisRatio;
+
+                    if((movex > 0 && x < x1)
+                    || (movex < 0 && x > x1)
+                    ){
+                        x += movex;
+                    }else{
+                        movex = 0;
+                    }
+                    if((movey > 0 && y < y1)
+                    || (movey < 0 && y > y1)
+                    ){
+                        y += movey;
+                    }else{
+                        movey = 0;
+                    }
+
+                    if(movex == 0 && movey == 0){
+                        x = x1;
+                        y = y1;
+                        x1 = undefined;
+                        x2 = undefined;
+                    }
+
+                }
+
+            }
+
+            const fpsSetting = 150;
+            const fpsTimeGap = Number(Number(1000 / fpsSetting).toFixed(2));
+
+            const draw = (time)=>{
+
+                window.requestAnimationFrame(draw);
+
+                if(prev < 0){
+                    prev = time;
+                    return;
+                }
+
+                delta = time - prev;
+
+                if(delta > fpsTimeGap){
+                    // prev = time - (delta - fpsTimeGap);
+                    prev = time;
+                }else{
+                    return;
+                }
+
+                fpsDelta = time - fpsPrev;
+                if(fpsDelta > 1000){
+                    fpsPrev = time;
+                    fps = Number(frame * 1000 / fpsDelta).toFixed(2);
+                    
+                    frame = 1;
+                }else{
+                    frame += 1;
+                }
+
+                update(delta);
+
+                clear();
+
+                rect();
+
+                fpsText();
+
+            }
+            
+            window.requestAnimationFrame(draw);
+
+        </script>
+        
+    </body>
+</html>
