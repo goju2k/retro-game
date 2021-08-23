@@ -39,6 +39,17 @@ export default {
     },
     created(){
 
+        //global 이벤트
+        //그리기 조정
+        document.addEventListener('visibilitychange', ()=>{
+            if(document.hidden){
+                this.drawStop();
+            }else{
+                this.drawStart();
+            }
+        }, false);
+        
+
         this.$nextTick(()=>{
 
             //컨텍스트 생성

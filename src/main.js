@@ -14,6 +14,8 @@ const app = createApp(App);
 app.config.globalProperties.$math = math;
 app.config.globalProperties.$num = num;
 
+app.config.globalProperties.$res = {};
+
 //device config 로딩
 app.config.globalProperties.$device = device;
 
