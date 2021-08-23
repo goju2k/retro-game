@@ -1,6 +1,6 @@
 <template>
 
-    <div ref="app" v-if="load" style="width:100%;height:100%;border:1px solid red;">
+    <div ref="app" v-if="load">
         <GameManager></GameManager>
     </div>
 
@@ -9,8 +9,6 @@
 <script>
 
 import GameManager from '@/game/manager/GameManager.vue'
-
-import Sprite from './modules/draw/sprite.js'
 
 export default {
     name: 'App',
@@ -23,6 +21,15 @@ export default {
         window.addEventListener('contextmenu', (e)=>{
             e.preventDefault();
         });
+
+        //global 환경변수
+        window.__gglobal = {};
+        window.setGlobalValue = (name, value)=>{
+            window.__gglobal[name] = value;
+        }
+        window.getGlobalValue = (name)=>{
+            return window.__gglobal[name];
+        }
         
         //시작
         this.load = true;
@@ -157,8 +164,18 @@ export default {
     src: url("/neodgm.woff");
 }
 
+*{
+    box-sizing: border-box;
+    margin:0px;
+}
+
 body{
     padding:0px;
-    margin:0px;
+    margin:0px;    
+    font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji;
+}
+
+div{
+    padding:0px;
 }
 </style>

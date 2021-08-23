@@ -1,8 +1,8 @@
 <template>
 
-    <div>
+    <div style="border:1px solid green;">
 
-        <can ref="can" :config="canvasConfig" :callback="canvasDraw"
+        <can ref="can" :config="canvasConfig" :callback="draw"
         @mousedown.prevent="mousedown"
         @mousemove.prevent="mousemove"
         @mouseup.prevent="mouseup"
@@ -40,8 +40,8 @@ export default {
         this.canvasConfig.drawFps = 60;
         
         //display 크기 셋팅
-        this.canvasConfig.displayWidth = 1920;
-        this.canvasConfig.displayHeight = 1080;
+        this.canvasConfig.displayWidth = 1024;
+        this.canvasConfig.displayHeight = 768;
 
 
         //컨트롤 변수
@@ -49,10 +49,14 @@ export default {
 
 
         //씬 불러오기
-        this.currScene = require('@/game/scenes/sc_traning.js');
+        const ScTraning = require('@/game/scenes/ScTraining.js').default;
+        this.currScene = new ScTraning({name:'training stage'});
 
         //렌더링 후
         await this.$nextTick();
+
+        this.$refs.can.setActive(true);
+        this.$refs.can.drawStart();
 
     },
     methods:{
@@ -61,12 +65,26 @@ export default {
         ...gm_controls,
 
         //캔버스 그리기
-        canvasDraw(ctx, can, gapTime){
+        draw(ctx, can, gapTime){
+
+            //scene 계산
+            this.currScene.calc(gapTime);
 
             //scene 그리기
+            this.currScene.draw(ctx);
 
             //UI 그리기
 
+            //폰트 테스트
+            ctx.fillStyle = 'black';
+            ctx.font = '16px -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji';
+            ctx.fillText('폰트를 테스트합니다. Hi Hello World', 100, 100);
+
+        },
+
+        log(){
+            if(!window.getGlobalValue('GameManagerLogEnable')) return;
+            console.log('[GAME MANAGER] ', ...arguments);
         }
 
     }

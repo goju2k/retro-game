@@ -7,24 +7,15 @@
         >
             <div style="width:100px;">{{'FPS : ['+fps+']'}}</div>
             <input type="number" v-model="config.drawFps">
-            <button @click="drawStart()">시작</button>
-            <button @click="drawStop()">멈춰</button>
+            <button @click="setActive(true);drawStart();">시작</button>
+            <button @click="setActive(false);drawStop()">멈춰</button>
+
         </div>
 
         <!-- 게임 캔버스 -->
-        <div>
-
-            <!-- UI -->
-            <div>
-
-            </div>
-
-            <!-- 캔버스 -->
-            <canvas ref="can"
-            style="border:0px solid lightgrey;"
-            :width="width" :height="height"></canvas>
-
-        </div>
+        <canvas ref="can"
+        style="margin-bottom:-4px;"
+        :width="width" :height="height"></canvas>
 
     </div>
 
@@ -38,6 +29,8 @@ export default {
         callback:Function,
     },
     created(){
+
+        this.active = false;
 
         //global 이벤트
         //그리기 조정
@@ -129,13 +122,28 @@ export default {
     },
     methods:{
 
+        setActive(flag){
+            this.active = flag;
+        },
+
         drawStart(){
+
+            //active 아니면 종료
+            if(!this.active){
+                return;
+            }
+
+            this.log('drawStart!!')
+
             if(!this.drawId){
                 this.drawId = window.requestAnimationFrame(this.draw);
             }
+
         },
         drawStop(){
             if(this.drawId){
+
+                this.log('drawStop!!')
 
                 window.cancelAnimationFrame(this.drawId);
                 this.drawId = null;
@@ -157,6 +165,19 @@ export default {
             
             //Draw 체크
             if(!this.drawCheck(time)) return;
+
+            //canvas 클리어
+            // this.ctx.clearRect(-500, -500, this.$refs.can.width, this.$refs.can.height);
+            this.ctx.fillStyle = 'lightgrey';
+            this.ctx.fillRect(0, 0, this.width, this.height);
+
+            //임시 좌표 디버그
+            this.ctx.fillStyle = 'black';
+            for(let i = 0 ; i < this.width ; i = i + 32){
+                for(let k = 0 ; k < this.height ; k = k + 32){
+                    this.ctx.fillRect(i - 1, k - 1, 2, 2);
+                }
+            }
 
             //draw 처리
             this.callback(this.ctx, this.$refs.can, this.drawNextGapTime);
@@ -221,6 +242,11 @@ export default {
                 this.drawFrame += this.NUM_1;
             }
 
+        },
+
+        log(){
+            if(!window.getGlobalValue('CanvasLogEnable')) return;
+            console.log('[CANVAS] ', ...arguments);
         }
 
     }

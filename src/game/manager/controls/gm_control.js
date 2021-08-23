@@ -1,6 +1,7 @@
 const controls = {
 
-    mousedown(){
+    mousedown(e){
+        this.log('mousedown ('+e.x+','+e.y+')');
         this.mousedownFlag = true;
     },
     mousemove(e){
@@ -20,7 +21,7 @@ const controls = {
     keydown(e){
         
         e.stopPropagation();
-        e.preventDefault();
+        //e.preventDefault();
 
         // this.ctx.clearRect(0, 0, this.canvasConfig.gameWidth, this.canvasConfig.gameHeight);
         // if(e.keyCode == 37){ //left

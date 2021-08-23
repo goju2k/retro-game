@@ -35,12 +35,12 @@ class BaseObject {
     }
 
     //업데이트
-    update(timePassed){
+    calc(gapTime){
 
     }
 
     //그리기
-    draw(){
+    draw(ctx){
         
     }
 
