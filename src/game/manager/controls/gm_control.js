@@ -1,8 +1,22 @@
 const controls = {
 
     mousedown(e){
+        
         this.log('mousedown ('+e.x+','+e.y+')');
         this.mousedownFlag = true;
+
+        this.$refs.ta_event.focus();
+
+        if(this.currScene && this.currScene.mousedown){
+            this.currScene.mousedown.call(this.currScene, {
+                x:e.clientX,
+                y:e.clientY,
+                button:e.button,
+                ctrlKey:e.ctrlKey,
+                shiftKey:e.shiftKey,
+                altKey:e.altKey,
+            });
+        }
     },
     mousemove(e){
         
@@ -21,6 +35,15 @@ const controls = {
     keydown(e){
         
         e.stopPropagation();
+
+        if(this.currScene && this.currScene.keydown){
+            this.currScene.keydown.call(this.currScene, {
+                key:e.key,                
+                ctrlKey:e.ctrlKey,
+                shiftKey:e.shiftKey,
+                altKey:e.altKey,
+            });
+        }
         //e.preventDefault();
 
         // this.ctx.clearRect(0, 0, this.canvasConfig.gameWidth, this.canvasConfig.gameHeight);
@@ -45,7 +68,5 @@ const controls = {
     },
 
 }
-
-window.addEventListener('keydown', controls.keydown);
 
 export default controls;

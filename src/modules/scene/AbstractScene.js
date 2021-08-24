@@ -3,11 +3,11 @@ class AbstractScene {
     //생성자
     constructor(status){
         
-        //이름
-        this.name = 'unknown scene'
-
         //상태객체
         this.status = status || {};
+
+        //이름
+        this.name = this.status.name || 'unknown scene'
 
         //초기화
         this.init(this.status);
@@ -21,16 +21,16 @@ class AbstractScene {
 
     //계산
     calc(gapTime){
-        this.log('calc');
+        //this.log('calc');
     }
 
     //그리기
     draw(ctx){
-        this.log('draw');
+        //this.log('draw');
     }
 
     log(){
-        if(!window.getGlobalValue('SceneLogEnable')) return;
+        //if(!window.getGlobalValue('SceneLogEnable')) return;
         console.log('[SCENE '+this.name+'] ', ...arguments);
     }
 

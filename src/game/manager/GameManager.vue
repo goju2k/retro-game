@@ -9,6 +9,9 @@
         @mouseleave.prevent="mouseup"
         ></can>
 
+        <textarea ref='ta_event' style='position:absolute;z-index:-1;top:0px;left:0px;'
+        @keydown.prevent="keydown"></textarea>
+
     </div>
 
 </template>
@@ -40,8 +43,8 @@ export default {
         this.canvasConfig.drawFps = 60;
         
         //display 크기 셋팅
-        this.canvasConfig.displayWidth = 1024;
-        this.canvasConfig.displayHeight = 768;
+        this.canvasConfig.displayWidth = 1680;
+        this.canvasConfig.displayHeight = 1024;
 
 
         //컨트롤 변수

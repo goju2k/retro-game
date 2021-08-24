@@ -3,7 +3,7 @@
     <div ref="container">
         
         <!-- 디버그 패널 -->
-        <div v-if="config.debug" style="position:absolute;z-index:1;display:flex;align-items:center;"
+        <div v-if="config.debug" style="position:absolute;z-index:1;display:flex;align-items:center;background:lightblue;"
         >
             <div style="width:100px;">{{'FPS : ['+fps+']'}}</div>
             <input type="number" v-model="config.drawFps">
