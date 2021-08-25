@@ -1,4 +1,5 @@
 let imageCache = {};
+window.imageCache = imageCache;
 const getImage = (imageSrc) => {
     if(!imageCache[imageSrc]){
         imageCache[imageSrc] = createImage(imageSrc);
@@ -73,6 +74,9 @@ class Sprite {
             throw new Error('이미지의 프레임 ('+frameX+','+frameY+') 이 존재하지 않습니다.  최대좌표 => ('+this.xcnt+','+this.ycnt+')');
         }
 
+        ctx.strokeStyle = 'green';
+        ctx.strokeRect(Math.floor(x), Math.floor(y), this.scaleWidth, this.scaleHeight);
+
         //rotate 처리
         if(rotate !== undefined){
             ctx.save();
@@ -88,7 +92,7 @@ class Sprite {
             this.frame[frameX][frameY].offsetY, 
             this.frameWidth, 
             this.frameWidth, 
-            rotate*Math.floor(x), 
+            rotate!=1?rotate*Math.floor(x) - this.scaleWidth:Math.floor(x), 
             Math.floor(y), 
             this.scaleWidth, 
             this.scaleHeight

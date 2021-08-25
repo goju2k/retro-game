@@ -50,7 +50,7 @@ export default {
             this.ctx = can.getContext('2d');
             
             //스케일 계산
-            this.ctx.scale(this.scaleValue, this.scaleValue);
+            this.ctx.scale(this.scaleX, this.scaleY);
             
             //image scale option
             this.ctx.mozImageSmoothingEnabled = false;
@@ -66,6 +66,14 @@ export default {
         scaleValue(){
             const scaleX = this.config.displayWidth / this.config.gameWidth;
             return scaleX;
+        },
+        scaleX(){
+            const scaleX = this.config.displayWidth / this.config.gameWidth;
+            return scaleX;
+        },
+        scaleY(){
+            const scaleY = this.config.displayHeight / this.config.gameHeight;
+            return scaleY;
         },
         
         width(){
@@ -175,7 +183,7 @@ export default {
             this.ctx.fillStyle = 'black';
             for(let i = 0 ; i < this.width ; i = i + 32){
                 for(let k = 0 ; k < this.height ; k = k + 32){
-                    this.ctx.fillRect(i - 1, k - 1, 2, 2);
+                    this.ctx.fillRect(i, k, 1, 1);
                 }
             }
 
@@ -188,12 +196,19 @@ export default {
         },
         drawCheck(currTime){
 
+            if(this.drawGap === null){
+                return false;
+            }
+
             if(this.drawPrevTime < 0){
                 this.drawPrevTime = currTime;
                 return false;
             }
 
             this.drawGapTime += (currTime - this.drawPrevTime);
+            
+            //his.log('drawPrevTime', this.drawPrevTime, 'currTime', currTime, 'drawGapTime', this.drawGapTime)
+
             this.drawNextGapTime = this.drawGapTime;
             
             this.drawPrevTime = currTime;
@@ -205,7 +220,7 @@ export default {
 
             }else{
                 this.drawGapTime = this.config.drawMode == this.DRAW_MODE_1
-                ?this.drawGapTime - this.drawGap
+                ?(this.drawGapTime - this.drawGap > this.drawGap?this.drawGap:this.drawGapTime - this.drawGap)
                 :this.NUM_0;
             }
 
@@ -245,7 +260,7 @@ export default {
         },
 
         log(){
-            if(!window.getGlobalValue('CanvasLogEnable')) return;
+            //if(!window.getGlobalValue('CanvasLogEnable')) return;
             console.log('[CANVAS] ', ...arguments);
         }
 

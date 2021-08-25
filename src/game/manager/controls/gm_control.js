@@ -2,15 +2,15 @@ const controls = {
 
     mousedown(e){
         
-        this.log('mousedown ('+e.x+','+e.y+')');
+        this.log('mousedown original ('+e.offsetX+','+e.offsetY+')', e);
         this.mousedownFlag = true;
 
         this.$refs.ta_event.focus();
 
         if(this.currScene && this.currScene.mousedown){
             this.currScene.mousedown.call(this.currScene, {
-                x:e.clientX,
-                y:e.clientY,
+                x:Math.floor(e.offsetX * this.scaleX),
+                y:Math.floor(e.offsetY * this.scaleY),
                 button:e.button,
                 ctrlKey:e.ctrlKey,
                 shiftKey:e.shiftKey,

@@ -3,10 +3,9 @@
     <div style="border:1px solid green;">
 
         <can ref="can" :config="canvasConfig" :callback="draw"
-        @mousedown.prevent="mousedown"
-        @mousemove.prevent="mousemove"
-        @mouseup.prevent="mouseup"
-        @mouseleave.prevent="mouseup"
+        @mousedown.stop.prevent="mousedown"
+        @mousemove.stop.prevent="mousemove"
+        @mouseup.stop.prevent="mouseup"
         ></can>
 
         <textarea ref='ta_event' style='position:absolute;z-index:-1;top:0px;left:0px;'
@@ -27,6 +26,16 @@ export default {
     components: {
         can
     },
+    computed:{
+        scaleX(){
+            const scaleX = this.canvasConfig?this.canvasConfig.gameWidth / this.canvasConfig.displayWidth:1;
+            return scaleX;
+        },
+        scaleY(){
+            const scaleY = this.canvasConfig?this.canvasConfig.gameHeight / this.canvasConfig.displayHeight:1;
+            return scaleY;
+        },
+    },
     async created(){
 
         //캔버스 초기화
@@ -43,8 +52,8 @@ export default {
         this.canvasConfig.drawFps = 60;
         
         //display 크기 셋팅
-        this.canvasConfig.displayWidth = 1680;
-        this.canvasConfig.displayHeight = 1024;
+        this.canvasConfig.displayWidth = 1280;
+        this.canvasConfig.displayHeight = 720;
 
 
         //컨트롤 변수
@@ -74,7 +83,7 @@ export default {
             this.currScene.calc(gapTime);
 
             //scene 그리기
-            this.currScene.draw(ctx);
+            this.currScene.draw(ctx, gapTime);
 
             //UI 그리기
 
@@ -86,7 +95,7 @@ export default {
         },
 
         log(){
-            if(!window.getGlobalValue('GameManagerLogEnable')) return;
+            //if(!window.getGlobalValue('GameManagerLogEnable')) return;
             console.log('[GAME MANAGER] ', ...arguments);
         }
 

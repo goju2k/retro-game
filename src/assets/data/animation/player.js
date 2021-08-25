@@ -1,26 +1,36 @@
 export default {
     type:'ANIMATION',
-    maps:{
-        poses:{
-            src:'img/object/player/move.png',
-            offX:0,offY:576,w:32,h:32,
-        },
-        move1:{
-            src:'img/object/player/move.png',
-            offX:0,offY:0,w:32,h:32,
-        },
-        move2:{
-            src:'img/object/player/move.png',
-            xCnt:6,offX:192,offY:320,w:32,h:32,
-        },
-        move3:{
-            src:'img/object/player/move.png',
-            xCnt:16,offX:0,offY:480,w:32,h:32,
+    spriteMap:{
+        move:{
+            src:'object/player/move.png',
+            w:32,h:32,
         },
     },
-    defs:[
-        {
-            map:'move1'
-        }
-    ],
+    def:{
+        'run_top' : {
+            map:'move',
+            loopCnt:-1,
+            delay:1000,
+            frames:[
+                {
+                    pos:[3,0],
+                },
+                {
+                    pos:[4,0],
+                },
+                {
+                    pos:[5,0],
+                },
+                {
+                    pos:[6,0],
+                },
+                {
+                    pos:[7,0],
+                },
+                // {
+                //     pos:[8,0],
+                // }
+            ],
+        },
+    },
 }

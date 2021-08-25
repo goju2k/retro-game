@@ -1,6 +1,7 @@
 import AbstractScene from "@/modules/scene/AbstractScene";
 
 import Sprite from "@/modules/draw/Sprite"
+import Animation from "@/modules/draw/Animation"
 class ScTraining extends AbstractScene{
     
     //생성자
@@ -14,17 +15,28 @@ class ScTraining extends AbstractScene{
             'object/player/move.png',
             32,
             32,
-            1
+        );
+
+        this.spriteMove2 = new Sprite(
+            'object/player/move.png',
+            32,
+            32,
         );
 
         //임시 프레임번호
         this.framePos = [0,0];
 
+        this.ani = new Animation('player.js', 'run_top');
+
     }
 
-    draw(ctx){
+    draw(ctx, gapTime){
 
-        this.spriteMove.draw(ctx, 100, 200, this.framePos[0], this.framePos[1], -1);
+        // this.spriteMove.draw(ctx, 128, 128, this.framePos[0], this.framePos[1]);
+        
+        // this.spriteMove2.draw(ctx, 256, 256, this.framePos[0], this.framePos[1]);
+
+        this.ani.play(ctx, gapTime, 64, 64);
 
     }
 
