@@ -172,7 +172,10 @@ export default {
             this.drawId = window.requestAnimationFrame(this.draw);
             
             //Draw 체크
-            if(!this.drawCheck(time)) return;
+            if(!this.drawCheck(time)) {
+                this.log('frame skip');
+                return;
+            }
 
             //canvas 클리어
             // this.ctx.clearRect(-500, -500, this.$refs.can.width, this.$refs.can.height);
@@ -196,7 +199,7 @@ export default {
         },
         drawCheck(currTime){
 
-            if(this.drawGap === null){
+            if(this.config.drawMode==this.DRAW_MODE_1 && this.drawGap === null){
                 return false;
             }
 

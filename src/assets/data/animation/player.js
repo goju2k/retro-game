@@ -10,7 +10,7 @@ export default {
         'run_top' : {
             map:'move',
             loopCnt:-1,
-            delay:1000,
+            delay:80,
             frames:[
                 {
                     pos:[3,0],
@@ -27,9 +27,9 @@ export default {
                 {
                     pos:[7,0],
                 },
-                // {
-                //     pos:[8,0],
-                // }
+                {
+                    pos:[8,0],
+                }
             ],
         },
     },

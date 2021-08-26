@@ -81,7 +81,6 @@ class Animation {
 
         }
 
-        this.gapTime = 0; //지난 시간 변수
         this.currFrame = this.currAni.frames[frameNo]; //현재 재생 프레임
         this.currDelay = this.currFrame.delay?this.currFrame.delay:this.currAni.delay;
 
@@ -105,8 +104,15 @@ class Animation {
 
             this.gapTime += gapTime;
             if(this.gapTime >= this.currDelay){
+
+                //console.log('gap:', this.gapTime)
                 
+                this.gapTime = this.gapTime % this.currDelay; //지난 시간 변수
+
                 this.setNextFrame();
+
+                //console.log('gap 보정:'+this.gapTime)
+
             }
 
         }

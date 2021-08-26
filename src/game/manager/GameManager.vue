@@ -48,8 +48,8 @@ export default {
         this.canvasConfig.debug = true;
 
         //0:기본, 1:고정
-        this.canvasConfig.drawMode = 1;
-        this.canvasConfig.drawFps = 60;
+        // this.canvasConfig.drawMode = 0;
+        // this.canvasConfig.drawFps = 60;
         
         //display 크기 셋팅
         this.canvasConfig.displayWidth = 1280;
@@ -67,8 +67,10 @@ export default {
         //렌더링 후
         await this.$nextTick();
 
-        this.$refs.can.setActive(true);
-        this.$refs.can.drawStart();
+        const self = this;
+        window.setTimeout(()=>{
+            self.drawStart();
+        }, 500)
 
     },
     methods:{
@@ -76,8 +78,18 @@ export default {
         //컨트롤
         ...gm_controls,
 
+        //draw
+        drawStart(){
+
+            this.$refs.can.setActive(true);
+            this.$refs.can.drawStart();
+
+        },
+
         //캔버스 그리기
         draw(ctx, can, gapTime){
+
+            //this.log('gapTime', gapTime)
 
             //scene 계산
             this.currScene.calc(gapTime);
