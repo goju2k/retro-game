@@ -7,7 +7,29 @@ export default {
         },
     },
     def:{
-        'run_top' : {
+        'pose' : {
+            map:'move',
+            loopCnt:-1,
+            delay:400,
+            frames:[
+                {
+                    pos:[0,9],
+                },
+                {
+                    pos:[1,9],
+                    delay:150,
+                },
+                {
+                    pos:[2,9],
+                    delay:350,
+                },
+                {
+                    pos:[3,9],
+                    delay:600,
+                },
+            ],
+        },
+        'run_up' : {
             map:'move',
             loopCnt:-1,
             delay:80,
@@ -29,6 +51,184 @@ export default {
                 },
                 {
                     pos:[8,0],
+                }
+            ],
+        },
+        'run_down' : {
+            map:'move',
+            loopCnt:-1,
+            delay:80,
+            frames:[
+                {
+                    pos:[3,4],
+                },
+                {
+                    pos:[4,4],
+                },
+                {
+                    pos:[5,4],
+                },
+                {
+                    pos:[6,4],
+                },
+                {
+                    pos:[7,4],
+                },
+                {
+                    pos:[8,4],
+                }
+            ],
+        },
+        'run_right' : {
+            map:'move',
+            loopCnt:-1,
+            delay:80,
+            frames:[
+                {
+                    pos:[3,2],
+                },
+                {
+                    pos:[4,2],
+                },
+                {
+                    pos:[5,2],
+                },
+                {
+                    pos:[6,2],
+                },
+                {
+                    pos:[7,2],
+                },
+                {
+                    pos:[8,2],
+                }
+            ],
+        },
+        'run_left' : {
+            map:'move',
+            loopCnt:-1,
+            delay:80,
+            flipX:-1,
+            frames:[
+                {
+                    pos:[3,2],
+                },
+                {
+                    pos:[4,2],
+                },
+                {
+                    pos:[5,2],
+                },
+                {
+                    pos:[6,2],
+                },
+                {
+                    pos:[7,2],
+                },
+                {
+                    pos:[8,2],
+                }
+            ],
+        },
+        'run_up_right' : {
+            map:'move',
+            loopCnt:-1,
+            delay:80,
+            frames:[
+                {
+                    pos:[3,1],
+                },
+                {
+                    pos:[4,1],
+                },
+                {
+                    pos:[5,1],
+                },
+                {
+                    pos:[6,1],
+                },
+                {
+                    pos:[7,1],
+                },
+                {
+                    pos:[8,1],
+                }
+            ],
+        },
+        'run_up_left' : {
+            map:'move',
+            loopCnt:-1,
+            delay:80,
+            flipX:-1,
+            frames:[
+                {
+                    pos:[3,1],
+                },
+                {
+                    pos:[4,1],
+                },
+                {
+                    pos:[5,1],
+                },
+                {
+                    pos:[6,1],
+                },
+                {
+                    pos:[7,1],
+                },
+                {
+                    pos:[8,1],
+                }
+            ],
+        },
+        'run_down_right' : {
+            map:'move',
+            loopCnt:-1,
+            delay:80,
+            frames:[
+                {
+                    pos:[3,3],
+                },
+                {
+                    pos:[4,3],
+                },
+                {
+                    pos:[5,3],
+                },
+                {
+                    pos:[6,3],
+                },
+                {
+                    pos:[7,3],
+                },
+                {
+                    pos:[8,3],
+                }
+            ],
+        },
+        'run_down_left' : {
+            map:'move',
+            loopCnt:-1,
+            delay:80,
+            flipX:-1,
+            frames:[
+                {
+                    pos:[3,3],
+                },
+                {
+                    pos:[4,3],
+                },
+                {
+                    pos:[5,3],
+                },
+                {
+                    pos:[6,3],
+                },
+                {
+                    pos:[7,3],
+                },
+                {
+                    pos:[8,3],
                 }
             ],
         },

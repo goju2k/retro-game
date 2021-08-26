@@ -20,12 +20,12 @@ class AbstractScene {
     }
 
     //계산
-    calc(gapTime){
+    calc(ctx, gapTime, keyInput){
         //this.log('calc');
     }
 
     //그리기
-    draw(ctx){
+    draw(ctx, gapTime, keyInput){
         //this.log('draw');
     }
 

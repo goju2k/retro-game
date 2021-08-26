@@ -9,53 +9,89 @@ class ScTraining extends AbstractScene{
 
         //super
         super(status);
+        
+        //임시 좌표
+        this.x = 64;
+        this.y = 64;
+        this.speed = 130;
+        this.const_sqrt = 1.414;
 
-        //스프라이트 테스트
-        this.spriteMove = new Sprite(
-            'object/player/move.png',
-            32,
-            32,
-        );
-
-        this.spriteMove2 = new Sprite(
-            'object/player/move.png',
-            32,
-            32,
-        );
-
-        //임시 프레임번호
-        this.framePos = [0,0];
-
-        this.ani = new Animation('player.js', 'run_top');
+        this.ani = new Animation('player.js', 'pose');
 
     }
 
-    draw(ctx, gapTime){
+    calc(ctx, gapTime, keyInput){
 
-        // this.spriteMove.draw(ctx, 128, 128, this.framePos[0], this.framePos[1]);
+        const deltaDistance = this.calcMove(gapTime);
+        const deltaDistance2 = Math.sqrt(deltaDistance);
         
-        // this.spriteMove2.draw(ctx, 256, 256, this.framePos[0], this.framePos[1]);
+        //우상단
+        if(keyInput.up && keyInput.right){
+            this.ani.initAnimation('run_up_right');
+            this.x += deltaDistance2;
+            this.y -= deltaDistance2;
+        }
+        //좌상단
+        else if(keyInput.up && keyInput.left){
+            this.ani.initAnimation('run_up_left');
+            this.x -= deltaDistance2;
+            this.y -= deltaDistance2;
+        }
+        //우하단
+        else if(keyInput.down && keyInput.right){
+            this.ani.initAnimation('run_down_right');
+            this.x += deltaDistance2;
+            this.y += deltaDistance2;
+        }
+        //좌하단
+        else if(keyInput.down && keyInput.left){
+            this.ani.initAnimation('run_down_left');
+            this.x -= deltaDistance2;
+            this.y += deltaDistance2;
+        }
+        //위
+        else if(keyInput.up){
+            this.ani.initAnimation('run_up');
+            this.y -= deltaDistance;
+        }
+        //아래
+        else if(keyInput.down){
+            this.ani.initAnimation('run_down');
+            this.y += deltaDistance;
+        }
+        //오른쪽
+        else if(keyInput.right){
+            this.ani.initAnimation('run_right');
+            this.x += deltaDistance;
+        }
+        //왼쪽
+        else if(keyInput.left){
+            this.ani.initAnimation('run_left');
+            this.x -= deltaDistance;
+        }
+        //정지
+        else{
+            this.ani.initAnimation('pose');
+        }
 
-        this.ani.play(ctx, gapTime, 64, 64);
+    }
 
+    draw(ctx, gapTime, keyInput){
+
+        this.ani.play(ctx, gapTime, this.x, this.y);
+
+    }
+
+    //player 임시메소드
+    calcMove(gapTime){
+        return Math.floor(gapTime * this.speed / 1000);
     }
 
     mousedown(e){
-        this.log('mousedown', e);
+        //this.log('mousedown', e);
     }
     keydown(e){
-        this.log('keydown', e);
-
-        if(e.key == 'ArrowUp' && this.framePos[1] > 0){
-            this.framePos[1] = this.framePos[1] - 1;
-        }else if(e.key == 'ArrowDown' && this.framePos[1] < this.spriteMove.ycnt - 1){
-            this.framePos[1] = this.framePos[1] + 1;
-        }else if(e.key == 'ArrowLeft' && this.framePos[0] > 0){
-            this.framePos[0] = this.framePos[0] - 1;
-        }else if(e.key == 'ArrowRight' && this.framePos[0] < this.spriteMove.xcnt - 1){
-            this.framePos[0] = this.framePos[0] + 1;
-        }
-
+        //this.log('keydown', e);
     }
 
 }

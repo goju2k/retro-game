@@ -46,8 +46,15 @@ class Animation {
 
     initAnimation(aniName){
 
+        const newAni = this.animationMap[aniName];
+
+        //애니메이션 변경이 없으면 종료
+        if(newAni == this.currAni){
+            return;
+        }
+
         this.loopCnt = 0; //반복된 횟수
-        this.currAni = this.animationMap[aniName]; //현재 재생 애니메이션
+        this.currAni = newAni; //현재 재생 애니메이션
         this.currSprite = this.spriteMap[this.currAni.map]; //현재 대상 스프라이트
         
         this.setNextFrame(0); //0번 프레임 셋팅
@@ -93,11 +100,11 @@ class Animation {
         }
 
         //현재 프레임 draw
-        this.currSprite.draw(ctx, x, y, this.currFrame.pos[0], this.currFrame.pos[1], this.currFrame.flipX);
+        this.currSprite.draw(ctx, x, y, this.currFrame.pos[0], this.currFrame.pos[1], this.currAni.flipX);
 
-        ctx.fillStyle = 'red';
-        ctx.font = '11px -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji';
-        ctx.fillText('no:'+this.currAni.frames.indexOf(this.currFrame), x, y);
+        // ctx.fillStyle = 'red';
+        // ctx.font = '11px -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji';
+        // ctx.fillText('no:'+this.currAni.frames.indexOf(this.currFrame), x, y);
 
         //gap 누적
         if(this.currAni.frames.length > 1){

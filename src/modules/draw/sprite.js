@@ -74,8 +74,9 @@ class Sprite {
             throw new Error('이미지의 프레임 ('+frameX+','+frameY+') 이 존재하지 않습니다.  최대좌표 => ('+this.xcnt+','+this.ycnt+')');
         }
 
-        ctx.strokeStyle = 'green';
-        ctx.strokeRect(Math.floor(x), Math.floor(y), this.scaleWidth, this.scaleHeight);
+        //디버그용 박스
+        // ctx.strokeStyle = 'green';
+        // ctx.strokeRect(Math.floor(x), Math.floor(y), this.scaleWidth, this.scaleHeight);
 
         //rotate 처리
         if(rotate !== undefined){

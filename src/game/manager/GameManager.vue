@@ -9,7 +9,9 @@
         ></can>
 
         <textarea ref='ta_event' style='position:absolute;z-index:-1;top:0px;left:0px;'
-        @keydown.prevent="keydown"></textarea>
+        @keydown.prevent="keydown"
+        @keyup.prevent="keyup"
+        ></textarea>
 
     </div>
 
@@ -59,6 +61,13 @@ export default {
         //컨트롤 변수
         this.mousedownFlag = false;
 
+        //키 입력 상태 객체
+        this.keyInputObject = {
+            left:false,
+            right:false,
+            up:false,
+            down:false,
+        };
 
         //씬 불러오기
         const ScTraning = require('@/game/scenes/ScTraining.js').default;
@@ -92,22 +101,17 @@ export default {
             //this.log('gapTime', gapTime)
 
             //scene 계산
-            this.currScene.calc(gapTime);
+            this.currScene.calc(ctx, gapTime, this.keyInputObject);
 
             //scene 그리기
-            this.currScene.draw(ctx, gapTime);
+            this.currScene.draw(ctx, gapTime, this.keyInputObject);
 
             //UI 그리기
-
-            //폰트 테스트
-            ctx.fillStyle = 'black';
-            ctx.font = '16px -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji';
-            ctx.fillText('폰트를 테스트합니다. Hi Hello World', 100, 100);
 
         },
 
         log(){
-            //if(!window.getGlobalValue('GameManagerLogEnable')) return;
+            if(!window.getGlobalValue('GameManagerLogEnable')) return;
             console.log('[GAME MANAGER] ', ...arguments);
         }
 

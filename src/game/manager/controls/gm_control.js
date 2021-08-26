@@ -1,5 +1,17 @@
 const controls = {
 
+    createEventObject(e){
+        return {
+            x:e.offsetX?Math.floor(e.offsetX * this.scaleX):null,
+            y:e.offsetY?Math.floor(e.offsetY * this.scaleY):null,
+            key:e.key,
+            button:e.button,
+            ctrlKey:e.ctrlKey,
+            shiftKey:e.shiftKey,
+            altKey:e.altKey,
+        }
+    },
+
     mousedown(e){
         
         this.log('mousedown original ('+e.offsetX+','+e.offsetY+')', e);
@@ -8,14 +20,7 @@ const controls = {
         this.$refs.ta_event.focus();
 
         if(this.currScene && this.currScene.mousedown){
-            this.currScene.mousedown.call(this.currScene, {
-                x:Math.floor(e.offsetX * this.scaleX),
-                y:Math.floor(e.offsetY * this.scaleY),
-                button:e.button,
-                ctrlKey:e.ctrlKey,
-                shiftKey:e.shiftKey,
-                altKey:e.altKey,
-            });
+            this.currScene.mousedown.call(this.currScene, this.createEventObject(e));
         }
     },
     mousemove(e){
@@ -28,42 +33,60 @@ const controls = {
         // this.ctx.translate(e.movementX, e.movementY);
 
     },
-    mouseup(){
+    mouseup(e){
+
+        this.log('mousedown original ('+e.offsetX+','+e.offsetY+')', e);
         this.mousedownFlag = false;
+        if(this.currScene && this.currScene.mouseup){
+            this.currScene.mouseup.call(this.currScene, this.createEventObject(e));
+        }
+
     },
 
     keydown(e){
         
         e.stopPropagation();
+        e.preventDefault();
+        this.log('keydown original ('+e.key+')', e);
 
-        if(this.currScene && this.currScene.keydown){
-            this.currScene.keydown.call(this.currScene, {
-                key:e.key,                
-                ctrlKey:e.ctrlKey,
-                shiftKey:e.shiftKey,
-                altKey:e.altKey,
-            });
+        //keyInputObject 갱신
+        if(e.key == 'ArrowUp'){
+            this.keyInputObject.up = true;
+        }else if(e.key == 'ArrowDown'){
+            this.keyInputObject.down = true;
+        }else if(e.key == 'ArrowLeft'){
+            this.keyInputObject.left = true;
+        }else if(e.key == 'ArrowRight'){
+            this.keyInputObject.right = true;
         }
-        //e.preventDefault();
 
-        // this.ctx.clearRect(0, 0, this.canvasConfig.gameWidth, this.canvasConfig.gameHeight);
-        // if(e.keyCode == 37){ //left
-        //     this.ctx.translate(10, 0);
-        //     this.charx -= 10;
-        // }else if(e.keyCode == 38){ //up
-        //     this.ctx.translate(0, 10);
-        //     this.chary -= 10;
-        // }else if(e.keyCode == 39){ //right
-        //     this.ctx.translate(-10, 0);
-        //     this.charx += 10;
-        // }else if(e.keyCode == 40){ //down
-        //     this.ctx.translate(0, -10);
-        //     this.chary += 10;
-        // }else{
-        //     return;
-        // }
+        //scene 에 이벤트 전송
+        if(this.currScene && this.currScene.keydown){
+            this.currScene.keydown.call(this.currScene, this.createEventObject(e));
+        }
 
-        // this.drawObject(0);
+    },
+
+    keyup(e){
+        
+        e.stopPropagation();
+        e.preventDefault();
+        this.log('keyup original ('+e.key+')', e);
+
+        //keyInputObject 갱신
+        if(e.key == 'ArrowUp'){
+            this.keyInputObject.up = false;
+        }else if(e.key == 'ArrowDown'){
+            this.keyInputObject.down = false;
+        }else if(e.key == 'ArrowLeft'){
+            this.keyInputObject.left = false;
+        }else if(e.key == 'ArrowRight'){
+            this.keyInputObject.right = false;
+        }
+
+        if(this.currScene && this.currScene.keyup){
+            this.currScene.keyup.call(this.currScene, this.createEventObject(e));
+        }
         
     },
 
