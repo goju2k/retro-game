@@ -17,6 +17,8 @@ class ScTraining extends AbstractScene{
         
         this.ani = new Animation('player.js', 'pose');
 
+        this.background = new Sprite('map/rhombus-square-bg.png');
+
     }
 
     calc(ctx, gapTime, keyInput){
@@ -76,6 +78,8 @@ class ScTraining extends AbstractScene{
     }
 
     draw(ctx, gapTime, keyInput){
+        
+        this.background.draw(ctx, 0, 0, 0, 0);
 
         this.ani.play(ctx, gapTime, this.x, this.y);
         
