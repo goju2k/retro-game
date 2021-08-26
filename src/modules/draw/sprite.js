@@ -29,6 +29,10 @@ class Sprite {
         const self = this;
         this.image.addEventListener('load', function() {
 
+            //프레임 처리
+            if(!frameWidth) frameWidth = self.image.width;
+            if(!frameHeight) frameHeight = self.image.height;
+
             //스케일 처리
             self.scale = scale?scale:1;
             self.scaleWidth = frameWidth * self.scale;
