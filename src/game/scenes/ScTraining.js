@@ -13,9 +13,8 @@ class ScTraining extends AbstractScene{
         //임시 좌표
         this.x = 64;
         this.y = 64;
-        this.speed = 130;
-        this.const_sqrt = 1.414;
-
+        this.speed = 140; //1초에 100픽셀
+        
         this.ani = new Animation('player.js', 'pose');
 
     }
@@ -23,7 +22,7 @@ class ScTraining extends AbstractScene{
     calc(ctx, gapTime, keyInput){
 
         const deltaDistance = this.calcMove(gapTime);
-        const deltaDistance2 = Math.sqrt(deltaDistance);
+        const deltaDistance2 = deltaDistance * Math.SQRT1_2;
         
         //우상단
         if(keyInput.up && keyInput.right){
@@ -79,7 +78,7 @@ class ScTraining extends AbstractScene{
     draw(ctx, gapTime, keyInput){
 
         this.ani.play(ctx, gapTime, this.x, this.y);
-
+        
     }
 
     //player 임시메소드

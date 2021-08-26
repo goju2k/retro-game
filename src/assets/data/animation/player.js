@@ -1,6 +1,10 @@
 export default {
     type:'ANIMATION',
     spriteMap:{
+        pose:{
+            src:'object/player/poses.png',
+            w:32,h:32,
+        },
         move:{
             src:'object/player/move.png',
             w:32,h:32,
@@ -10,22 +14,38 @@ export default {
         'pose' : {
             map:'move',
             loopCnt:-1,
-            delay:400,
+            delay:100,
             frames:[
                 {
-                    pos:[0,9],
+                    pos:[5,18],
                 },
                 {
-                    pos:[1,9],
-                    delay:150,
+                    pos:[6,18],
                 },
                 {
-                    pos:[2,9],
-                    delay:350,
+                    pos:[7,18],
                 },
                 {
-                    pos:[3,9],
-                    delay:600,
+                    pos:[8,18],
+                },
+            ],
+        },
+        'pose' : {
+            map:'move',
+            loopCnt:-1,
+            delay:100,
+            frames:[
+                {
+                    pos:[5,18],
+                },
+                {
+                    pos:[6,18],
+                },
+                {
+                    pos:[7,18],
+                },
+                {
+                    pos:[8,18],
                 },
             ],
         },
