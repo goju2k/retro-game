@@ -47,15 +47,15 @@ export default {
         //!!임시 캔버스 설정추가
 
         //디버그 on/off
-        this.canvasConfig.debug = true;
+        this.canvasConfig.debug = false;
 
         //0:기본, 1:고정
         // this.canvasConfig.drawMode = 0;
         // this.canvasConfig.drawFps = 60;
         
         //display 크기 셋팅
-        this.canvasConfig.displayWidth = 1280;
-        this.canvasConfig.displayHeight = 720;
+        this.canvasConfig.displayWidth = 1600;
+        this.canvasConfig.displayHeight = 900;
 
 
         //컨트롤 변수
