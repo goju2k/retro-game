@@ -3,9 +3,10 @@
     <div ref="container">
         
         <!-- 디버그 패널 -->
-        <div v-if="config.debug" style="position:absolute;z-index:1;display:flex;align-items:center;background:lightblue;"
+        <div v-if="config.debug" style="position:absolute;z-index:1;padding:3px 5px;display:flex;align-items:center;background:lightblue;"
         >
-            <div style="width:100px;">{{'FPS : ['+fps+']'}}</div>
+            <div style="width:80px;">{{'FPS : ['+fps+']'}}</div>
+            <div style="width:80px;margin:0px 5px;">{{'Playing : '+(active?'Y':'N')}}</div>
             <input type="number" v-model="config.drawFps">
             <button @click="setActive(true);drawStart();">시작</button>
             <button @click="setActive(false);drawStop()">멈춰</button>
