@@ -55,6 +55,7 @@ class Animation {
 
         this.loopCnt = 0; //반복된 횟수
         this.currAni = newAni; //현재 재생 애니메이션
+        this.currAni.name = aniName; //이름 셋팅
         this.currSprite = this.spriteMap[this.currAni.map]; //현재 대상 스프라이트
         
         this.setNextFrame(0); //0번 프레임 셋팅
