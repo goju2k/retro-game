@@ -29,7 +29,7 @@ class Animation {
         this.animationMap = aniMeta.def;
 
         //실행관련 변수
-        this.playing = true;
+        this.playing = false;
         this.gapTime = 0; //지난 시간 변수
         this.loopCnt = 0; //반복된 횟수
         this.currDelay = 0; //현재 프레임의 지연(재생시간)
@@ -39,17 +39,19 @@ class Animation {
 
         //초기 애니메이션 지정
         if(initAnimationName){
-            this.initAnimation(initAnimationName);
+            this.setAnimation(initAnimationName, true);
         }
 
     }
 
-    initAnimation(aniName){
+    setAnimation(aniName, init){
+
+        this.playing = true;
 
         const newAni = this.animationMap[aniName];
 
         //애니메이션 변경이 없으면 종료
-        if(newAni == this.currAni){
+        if(!init && newAni == this.currAni){
             return;
         }
 
@@ -71,15 +73,16 @@ class Animation {
             //마지막 프레임이면
             if(frameNo === this.currAni.frames.length){
 
-                //반복수 도달시 종료
-                if(this.currAni.loopCnt > 0 && this.loopCnt == this.currAni.loopCnt){
-                    this.pause(true);
-                    return;
-                }
-                
                 //반복수 지정되어 있는경우만 증가
                 if(this.currAni.loopCnt > 0){
                     this.loopCnt += 1;
+                }
+                
+                //반복수 도달시 종료
+                if(this.currAni.loopCnt > 0 && this.loopCnt == this.currAni.loopCnt){
+                    this.loopCnt = 0;
+                    this.pause(true);
+                    return;
                 }
                 
                 //첫 프레임으로

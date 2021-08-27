@@ -1,0 +1,29 @@
+export default {
+    spriteMap:{
+        arrow:{
+            src:'effect/arrow/position-arrow.png',
+            w:32,h:32,
+        },
+    },
+    def:{
+        'position' : {
+            map:'arrow',
+            loopCnt:2,
+            delay:80,
+            frames:[
+                {
+                    pos:[0,0],
+                },
+                {
+                    pos:[1,0],
+                },
+                {
+                    pos:[2,0],
+                },
+                {
+                    pos:[3,0],
+                },
+            ],
+        },
+    },
+}

@@ -33,6 +33,8 @@ class ScTraining extends AbstractScene{
 
         this.background = new Sprite('map/rhombus-square-bg.png');
 
+        this.arrow = new Animation('positionArrow.js'); 
+
     }
 
     calc(ctx, gapTime, keyInput){
@@ -43,57 +45,57 @@ class ScTraining extends AbstractScene{
             const deltaDistance2 = deltaDistance * Math.SQRT1_2;
             //우상단
             if(keyInput.up && keyInput.right){
-                // this.ani.initAnimation('run_up_right');
-                this.ani.initAnimation('run_right');
+                // this.ani.setAnimation('run_up_right');
+                this.ani.setAnimation('run_right');
                 this.x += deltaDistance2;
                 this.y -= deltaDistance2;
             }
             //좌상단
             else if(keyInput.up && keyInput.left){
-                // this.ani.initAnimation('run_up_left');
-                this.ani.initAnimation('run_left');
+                // this.ani.setAnimation('run_up_left');
+                this.ani.setAnimation('run_left');
                 this.x -= deltaDistance2;
                 this.y -= deltaDistance2;
             }
             //우하단
             else if(keyInput.down && keyInput.right){
-                // this.ani.initAnimation('run_down_right');
-                this.ani.initAnimation('run_right');
+                // this.ani.setAnimation('run_down_right');
+                this.ani.setAnimation('run_right');
                 this.x += deltaDistance2;
                 this.y += deltaDistance2;
             }
             //좌하단
             else if(keyInput.down && keyInput.left){
-                // this.ani.initAnimation('run_down_left');
-                this.ani.initAnimation('run_left');
+                // this.ani.setAnimation('run_down_left');
+                this.ani.setAnimation('run_left');
                 this.x -= deltaDistance2;
                 this.y += deltaDistance2;
             }
             //위
             else if(keyInput.up){
-                // this.ani.initAnimation('run_up');
-                this.ani.initAnimation(this.ani.currAni.name=='run_right'?'run_right':'run_left');
+                // this.ani.setAnimation('run_up');
+                this.ani.setAnimation(this.ani.currAni.name=='run_right'?'run_right':'run_left');
                 this.y -= deltaDistance;
             }
             //아래
             else if(keyInput.down){
-                // this.ani.initAnimation('run_down');
-                this.ani.initAnimation(this.ani.currAni.name=='run_right'?'run_right':'run_left');
+                // this.ani.setAnimation('run_down');
+                this.ani.setAnimation(this.ani.currAni.name=='run_right'?'run_right':'run_left');
                 this.y += deltaDistance;
             }
             //오른쪽
             else if(keyInput.right){
-                this.ani.initAnimation('run_right');
+                this.ani.setAnimation('run_right');
                 this.x += deltaDistance;
             }
             //왼쪽
             else if(keyInput.left){
-                this.ani.initAnimation('run_left');
+                this.ani.setAnimation('run_left');
                 this.x -= deltaDistance;
             }
             //정지
             else{
-                this.ani.initAnimation('pose');
+                this.ani.setAnimation('pose');
             }
 
         }else if(this.action == 1){ //마우스이동
@@ -130,10 +132,10 @@ class ScTraining extends AbstractScene{
             }
 
             if(this.movex == this.x && this.movey == this.y){
-                this.ani.initAnimation('pose');
+                this.ani.setAnimation('pose');
                 this.action = 0;
             }else{
-                this.moveDirectionH==1?this.ani.initAnimation('run_right'):this.ani.initAnimation('run_left');
+                this.moveDirectionH==1?this.ani.setAnimation('run_right'):this.ani.setAnimation('run_left');
             }
 
         }
@@ -146,6 +148,10 @@ class ScTraining extends AbstractScene{
         this.background.draw(ctx, 0, 0, 0, 0);
 
         this.ani.play(ctx, gapTime, this.x, this.y);
+
+        if(this.action == 1){
+            this.arrow.play(ctx, gapTime, this.movex, this.movey);
+        }
         
     }
 
@@ -159,6 +165,9 @@ class ScTraining extends AbstractScene{
         this.log('mousedown', e);
 
         if(e.button == 2){
+            
+            this.arrow.setAnimation('position', true);
+
             this.action = 1;
             this.movex = e.x - 16;
             this.movey = e.y - 16;
