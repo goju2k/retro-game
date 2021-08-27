@@ -180,12 +180,12 @@ export default {
             //canvas 클리어
             // this.ctx.clearRect(-500, -500, this.$refs.can.width, this.$refs.can.height);
             this.ctx.fillStyle = 'lightgrey';
-            this.ctx.fillRect(0, 0, this.width, this.height);
+            this.ctx.fillRect(0, 0, this.config.gameWidth, this.config.gameHeight);
 
             //임시 좌표 디버그
             this.ctx.fillStyle = 'black';
-            for(let i = 0 ; i < this.width ; i = i + 32){
-                for(let k = 0 ; k < this.height ; k = k + 32){
+            for(let i = 0 ; i < this.config.gameWidth ; i = i + 32){
+                for(let k = 0 ; k < this.config.gameHeight ; k = k + 32){
                     this.ctx.fillRect(i, k, 1, 1);
                 }
             }
