@@ -47,7 +47,7 @@ const controls = {
         
         e.stopPropagation();
         e.preventDefault();
-        this.log('keydown original ('+e.key+')', e);
+        //this.log('keydown original ('+e.key+')', e);
 
         //keyInputObject 갱신
         if(e.key == 'ArrowUp'){
@@ -71,7 +71,7 @@ const controls = {
         
         e.stopPropagation();
         e.preventDefault();
-        this.log('keyup original ('+e.key+')', e);
+        //this.log('keyup original ('+e.key+')', e);
 
         //keyInputObject 갱신
         if(e.key == 'ArrowUp'){
