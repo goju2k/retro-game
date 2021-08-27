@@ -47,7 +47,7 @@ export default {
         //!!임시 캔버스 설정추가
 
         //디버그 on/off
-        this.canvasConfig.debug = false;
+        this.canvasConfig.debug = true;
 
         //0:기본, 1:고정
         // this.canvasConfig.drawMode = 0;
