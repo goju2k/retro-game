@@ -1,5 +1,4 @@
 export default {
-    type:'ANIMATION',
     spriteMap:{
         pose:{
             src:'object/player/poses.png',
