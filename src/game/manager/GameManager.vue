@@ -38,6 +38,17 @@ export default {
             return scaleY;
         },
     },
+    beforeCreate(){
+        
+    },
+    beforeUnmount(){
+        if(this.resizeObserver)this.resizeObserver.disconnect();
+    },
+    data(){
+        return {
+            canvasConfig:{},
+        }
+    },
     async created(){
 
         //캔버스 초기화
@@ -75,6 +86,12 @@ export default {
 
         //렌더링 후
         await this.$nextTick();
+
+        this.resizeObserver = new ResizeObserver((entry)=>{
+            this.canvasConfig.displayWidth = entry[0].target.offsetWidth;
+            this.canvasConfig.displayHeight = entry[0].target.offsetHeight;
+        });
+        this.resizeObserver.observe(this.$refs.can.$el);
 
         const self = this;
         window.setTimeout(()=>{

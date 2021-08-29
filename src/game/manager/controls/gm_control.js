@@ -19,7 +19,7 @@ const controls = {
 
         this.$refs.ta_event.focus();
 
-        if(this.currScene && this.currScene.mousedown){
+        if(this.$refs.can.active && this.currScene && this.currScene.mousedown){
             this.currScene.mousedown.call(this.currScene, this.createEventObject(e));
         }
     },
@@ -37,7 +37,7 @@ const controls = {
 
         this.log('mousedown original ('+e.offsetX+','+e.offsetY+')', e);
         this.mousedownFlag = false;
-        if(this.currScene && this.currScene.mouseup){
+        if(this.$refs.can.active && this.currScene && this.currScene.mouseup){
             this.currScene.mouseup.call(this.currScene, this.createEventObject(e));
         }
 
@@ -60,8 +60,10 @@ const controls = {
             this.keyInputObject.right = true;
         }
 
+        this.keyInputObject.keydown = true;
+
         //scene 에 이벤트 전송
-        if(this.currScene && this.currScene.keydown){
+        if(this.$refs.can.active && this.currScene && this.currScene.keydown){
             this.currScene.keydown.call(this.currScene, this.createEventObject(e));
         }
 
@@ -84,7 +86,13 @@ const controls = {
             this.keyInputObject.right = false;
         }
 
-        if(this.currScene && this.currScene.keyup){
+        this.keyInputObject.keydown = this.keyInputObject.up
+        || this.keyInputObject.down
+        || this.keyInputObject.left
+        || this.keyInputObject.right
+        ;
+
+        if(this.$refs.can.active && this.currScene && this.currScene.keyup){
             this.currScene.keyup.call(this.currScene, this.createEventObject(e));
         }
         

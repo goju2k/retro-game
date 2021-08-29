@@ -8,8 +8,8 @@ export default {
     def:{
         'position' : {
             map:'arrow',
-            loopCnt:2,
-            delay:80,
+            loopCnt:1,
+            delay:20,
             frames:[
                 {
                     pos:[0,0],

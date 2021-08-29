@@ -1,12 +1,16 @@
-//BaseObject
-//좌표를 가지는 Sprite 의 집합체
-class BaseObject {
+import AcMove from '@/modules/action/AcMove'
+
+class AbstractObject {
 
     //생성자
-    constructor(ctx, config){
+    constructor(info){
 
-        //context
-        this.ctx = ctx;
+        //좌표
+        this.x = 0;
+        this.y = 0;
+
+        //그리기
+        this.active = true;
 
         //t-index : 2d 타일 상에서 그리기 순서 (Top -> Bottom 순서)
         this.tindex = 1;
@@ -20,28 +24,48 @@ class BaseObject {
         };
 
         //Sprites
-        this.spriteList = [];
+        this.sprite = {};
 
         //animation
-        this.animation = null;
+        this.animation = {};
 
-        //parent object
-        this.parent = null;
-        
-        if(config){
-            Object.assign(this, config);
+        //status
+        this.status = 0;
+    
+        if(info){
+            Object.assign(this, info);
         }
+        
+        //액션
+        this.action = 0;  //0:대기, 1:마우스이동
+        if(!this.speed) this.speed = 140; //기본 스피드
+        this.actionObject = {
+            '1':new AcMove(this)
+        };
+
+        this.currAction;
 
     }
 
-    //업데이트
-    calc(gapTime){
+    setMove(targetX, targetY){
+
+        this.action = 1;
+        this.currAction = this.actionObject[this.action];
+
+        this.currAction.moveSetup(targetX, targetY);
+
+    }
+
+    //계산
+    calc(ctx, gapTime, keyInput){
 
     }
 
     //그리기
-    draw(ctx){
+    draw(ctx, gapTime, keyInput){
         
     }
 
 }
+
+export default AbstractObject;
