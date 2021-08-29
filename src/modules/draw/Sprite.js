@@ -3,6 +3,9 @@ window.imageCache = imageCache;
 const getImage = (imageSrc) => {
     if(!imageCache[imageSrc]){
         imageCache[imageSrc] = createImage(imageSrc);
+        //console.log('new image ', imageCache[imageSrc]);
+    }else{
+        //console.log('cache image ', imageCache[imageSrc]);
     }
     return imageCache[imageSrc];
 }
@@ -27,44 +30,43 @@ class Sprite {
 
         this.imageLoaded = false;
         const self = this;
-        this.image.addEventListener('load', function() {
+        
+        //console.log(imageSrc+' loaded!!!');
 
-            //프레임 처리
-            if(!frameWidth) frameWidth = self.image.width;
-            if(!frameHeight) frameHeight = self.image.height;
+        //프레임 처리
+        if(!frameWidth) frameWidth = self.image.width;
+        if(!frameHeight) frameHeight = self.image.height;
 
-            //스케일 처리
-            self.scale = scale?scale:1;
-            self.scaleWidth = frameWidth * self.scale;
-            self.scaleHeight = frameHeight * self.scale;
+        //스케일 처리
+        self.scale = scale?scale:1;
+        self.scaleWidth = frameWidth * self.scale;
+        self.scaleHeight = frameHeight * self.scale;
 
-            //이미지 비율 점검
-            self.frameWidth = frameWidth;
-            self.frameHeight = frameHeight;
-            if(self.image.width % frameWidth !== 0
-            || self.image.height % frameHeight !== 0
-            ){
-                throw new Error('이미지의 프레임사이즈 비율이 맞지 않습니다.');
+        //이미지 비율 점검
+        self.frameWidth = frameWidth;
+        self.frameHeight = frameHeight;
+        if(self.image.width % frameWidth !== 0
+        || self.image.height % frameHeight !== 0
+        ){
+            throw new Error('이미지의 프레임사이즈 비율이 맞지 않습니다.');
+        }
+
+        //프레임 정보 생성
+        const xcnt = self.xcnt = self.image.width / frameWidth;
+        const ycnt = self.ycnt = self.image.height / frameHeight;
+        self.frame = [];
+        for(let i = 0 ; i < xcnt ; i++){
+
+            if(!self.frame[i]){
+                self.frame[i] = [];
+            }
+            for(let k = 0 ; k < ycnt ; k++){
+                self.frame[i][k] = {offsetX:i*frameWidth, offsetY:k*frameHeight};
             }
 
-            //프레임 정보 생성
-            const xcnt = self.xcnt = self.image.width / frameWidth;
-            const ycnt = self.ycnt = self.image.height / frameHeight;
-            self.frame = [];
-            for(let i = 0 ; i < xcnt ; i++){
+        }
 
-                if(!self.frame[i]){
-                    self.frame[i] = [];
-                }
-                for(let k = 0 ; k < ycnt ; k++){
-                    self.frame[i][k] = {offsetX:i*frameWidth, offsetY:k*frameHeight};
-                }
-
-            }
-
-            self.imageLoaded = true;
-
-        }, false);
+        self.imageLoaded = true;
         
     }
 

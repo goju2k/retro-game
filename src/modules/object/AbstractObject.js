@@ -5,6 +5,9 @@ class AbstractObject {
     //생성자
     constructor(info){
 
+        //id
+        this._uid = performance.now();
+
         //좌표
         this.x = 0;
         this.y = 0;
