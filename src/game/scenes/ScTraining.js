@@ -23,7 +23,7 @@ class ScTraining extends AbstractScene{
         this.mosters = [
             //new Turtle({x:math.random(550),y:math.random(300), speed:80}),
         ];
-        for(let i=0 ; i<50 ; i++){
+        for(let i=0 ; i<1000 ; i++){
             this.mosters.push(new Turtle({x:math.random(550),y:math.random(300), speed:Math.floor(20+math.random(120))}));
         }
         this.monTime = 2000;
@@ -48,7 +48,7 @@ class ScTraining extends AbstractScene{
 
         if(this.monCurrTime >= this.monTime){
             this.mosters.push(new Turtle({x:math.random(550),y:math.random(300), speed:Math.floor(20+math.random(120))}));
-            this.monTime = 100 + math.random(500);
+            this.monTime = 100 + math.random(200);
             this.monCurrTime = 0;
         }else{
             this.monCurrTime += gapTime;
