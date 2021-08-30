@@ -133,7 +133,6 @@ export default {
         },
 
         log(){
-            if(!window.getGlobalValue('GameManagerLogEnable')) return;
             console.log('[GAME MANAGER] ', ...arguments);
         }
 
