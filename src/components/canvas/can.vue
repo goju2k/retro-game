@@ -30,8 +30,41 @@ export default {
         callback:Function,
     },
     created(){
+        
+        //2d context
+        this.ctx = null;
+
+        //draw
+        this.drawId = null;
+        this.drawFrame = 0;
+
+        //fps
+        this.fpsPrevTime = -1;
+    
+        //draw vars
+        this.drawPrevTime = -1;
+        this.drawGapTime = 0;
+        this.drawGapTimeTotal = 0;
+        this.drawNextGapTime = 0;
 
         this.active = false;
+
+        
+        //=== Constant =================
+
+        //fpsMode
+        this.DRAW_MODE_0 = 0;
+        this.DRAW_MODE_1 = 1;
+
+        //Number
+        this.NUM_0 = 0;
+        this.NUM_1 = 1;
+
+        //1초
+        this.SEC_1 = 1000;
+
+        //=== Constant =================
+
 
         //global 이벤트
         //그리기 조정
@@ -95,38 +128,9 @@ export default {
     data(){
         return {
             
-            //2d context
-            ctx:null,
-
-            //draw
-            drawId : null,
-            drawFrame : 0,
-
             //fps
             fps:0,
-            fpsPrevTime:-1,
-
-            //draw
-            drawPrevTime:-1,
-            drawGapTime:0,
-            drawGapTimeTotal:0,
-            drawNextGapTime:0,
-
-            //=== Constant =================
-
-            //fpsMode
-            DRAW_MODE_0:0,
-            DRAW_MODE_1:1,
-
-            //Number
-            NUM_0:0,
-            NUM_1:1,
-
-            //1초
-            SEC_1:1000,
-
-            //=== Constant =================
-
+            
         }
     },
     methods:{
@@ -185,8 +189,8 @@ export default {
 
             //임시 좌표 디버그
             this.ctx.fillStyle = 'black';
-            for(let i = 0 ; i < this.config.gameWidth ; i = i + 32){
-                for(let k = 0 ; k < this.config.gameHeight ; k = k + 32){
+            for(let i = 0, len =  this.config.gameWidth; i < len ; i = i + 32){
+                for(let k = 0, len2 = this.config.gameHeight ; k < len2 ; k = k + 32){
                     this.ctx.fillRect(i, k, 1, 1);
                 }
             }
@@ -264,7 +268,6 @@ export default {
         },
 
         log(){
-            //if(!window.getGlobalValue('CanvasLogEnable')) return;
             console.log('[CANVAS] ', ...arguments);
         }
 
