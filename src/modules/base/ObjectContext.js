@@ -1,29 +1,27 @@
-let mapSection;
-let mapData;
-
 class ObjectContext{
 
     constructor(){
-
+        this.mapData;
+        this.mapSection;
     }
 
     //맵 정보 초기화
     $setupMapInfo = function(map, mapSprite){
 
-        mapData = map;
+        this.mapData = map;
 
         const xcnt = map.width / map.blockSize;
         const ycnt = map.height / map.blockSize;
 
-        mapSection = [];
+        this.mapSection = [];
 
         for(let i = 0 ; i < xcnt ; i++){
 
-            mapSection[i] = [];
+            this.mapSection[i] = [];
 
             for(let k = 0 ; k < ycnt ; k++){
 
-                mapSection[i][k] = Object.assign({
+                this.mapSection[i][k] = Object.assign({
 
                     sprite : mapSprite, //맵 스프라이트
                     
@@ -42,11 +40,7 @@ class ObjectContext{
 
     //맵 정보 get
     $getMap = function(){
-        return mapSection;
-    }
-
-    $putObject = function(){
-        return GlobalVar;
+        return this.mapSection;
     }
     
 };
