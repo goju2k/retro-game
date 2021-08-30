@@ -1,7 +1,7 @@
 import BaseClass from "@/modules/base/BaseClass";
 
 let imageCache = {};
-window.imageCache = imageCache;
+
 const getImage = async (imageSrc, thisObject, callback) => {
 
     if(!imageCache[imageSrc]){
