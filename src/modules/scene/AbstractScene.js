@@ -54,7 +54,6 @@ class AbstractScene extends BaseClass{
     }
 
     log(){
-        //if(!window.getGlobalValue('SceneLogEnable')) return;
         console.log('[SCENE '+this.name+'] ', ...arguments);
     }
 
