@@ -5,7 +5,8 @@ import Animation from "@/modules/draw/Animation"
 import Player from "@/game/object/player/Player";
 import Turtle from "@/game/object/monster/turtle/Turtle";
 
-import math from "@/modules/util/math"
+import trainingMap from "@/assets/data/map/MapTraining"
+
 class ScTraining extends AbstractScene{
     
     //생성자
@@ -13,6 +14,13 @@ class ScTraining extends AbstractScene{
 
         //super
         super(status);
+
+        //map setting
+        this.$setupMapInfo(trainingMap, new Sprite(
+            trainingMap.spriteMap.src,
+            trainingMap.spriteMap.w,
+            trainingMap.spriteMap.h,
+        ));
 
         //player
         this.player = new Player({
@@ -23,18 +31,12 @@ class ScTraining extends AbstractScene{
         this.mosters = [
             //new Turtle({x:math.random(550),y:math.random(300), speed:80}),
         ];
-        for(let i=0 ; i<1000 ; i++){
-            this.mosters.push(new Turtle({x:math.random(550),y:math.random(300), speed:Math.floor(20+math.random(120))}));
+        for(let i=0 ; i<50 ; i++){
+            this.mosters.push(new Turtle({x:this.$math.random(550),y:this.$math.random(300), speed:Math.floor(20+this.$math.random(120))}));
         }
         this.monTime = 2000;
         this.monCurrTime = 0;
 
-        // const self = this;
-        // window.setInterval(()=>{
-        //     self.log('turtle created!!')
-        //     self.mosters.push(new Turtle({x:math.random(550),y:math.random(300), speed:100}));
-        // }, 5000);
-        
     }
 
     calc(ctx, gapTime, keyInput){
@@ -46,20 +48,22 @@ class ScTraining extends AbstractScene{
 
         this.player.calc(ctx, gapTime, keyInput);
 
-        if(this.monCurrTime >= this.monTime){
-            this.mosters.push(new Turtle({x:math.random(550),y:math.random(300), speed:Math.floor(20+math.random(120))}));
-            this.monTime = 100 + math.random(200);
-            this.monCurrTime = 0;
-        }else{
-            this.monCurrTime += gapTime;
-        }
+        // if(this.monCurrTime >= this.monTime){
+        //     this.mosters.push(new Turtle({x:this.$math.random(550),y:this.$math.random(300), speed:Math.floor(20+this.$math.random(120))}));
+        //     this.monTime = 100 + this.$math.random(200);
+        //     this.monCurrTime = 0;
+        // }else{
+        //     this.monCurrTime += gapTime;
+        // }
 
     }
 
     draw(ctx, gapTime, keyInput){
         
-        //this.background.draw(ctx, 0, 0, 0, 0);
+        //맵 그리기
+        this.drawMap(ctx);
 
+        //객체 그리기
         for(let mon of this.mosters){
             mon.draw(ctx, gapTime, keyInput);
         }

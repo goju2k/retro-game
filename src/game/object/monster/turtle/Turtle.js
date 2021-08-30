@@ -54,7 +54,7 @@ class Turtle extends AbstractObject{
 
         if(this.thinkCurrTime > this.thinkTime){
             this.thinkCurrTime = 0;
-            this.thinkTime = 3000 + math.random(5000);
+            this.thinkTime = 5000 + math.random(5000);
         }else{
             return;
         }

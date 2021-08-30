@@ -1,6 +1,6 @@
 import Math from "@/modules/util/math";
 import GlobalVar from "@/modules/base/GlobalVar";
-import ObjectFunc from "@/modules/base/ObjectFunc";
+import ObjectContext from "@/modules/base/ObjectContext";
 
 class BaseClass{
 
@@ -9,8 +9,8 @@ class BaseClass{
         this.$math = Math;
         this.$g = GlobalVar;
 
-        Object.assign(this, ObjectFunc);
-        
+        Object.assign(this, ObjectContext);
+
     }
 
 }

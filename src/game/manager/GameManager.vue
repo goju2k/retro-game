@@ -23,6 +23,8 @@ import can from '@/components/canvas/can.vue'
 
 import gm_controls from '@/game/manager/controls/gm_control.js'
 
+import device from '@/game/config/device.js'
+
 export default {
     name:'GameManager',
     components: {
@@ -53,7 +55,7 @@ export default {
 
         //캔버스 초기화
         this.canvasConfig = {};
-        Object.assign(this.canvasConfig, this.$device);
+        Object.assign(this.canvasConfig, device);
 
         //!!임시 캔버스 설정추가
 

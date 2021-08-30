@@ -33,6 +33,26 @@ class AbstractScene extends BaseClass{
         //this.log('draw');
     }
 
+    //맵 그리기
+    drawMap(ctx, gapTime, keyInput){
+
+        const mapSection = this.$getMap();
+
+        for(let mapRow of mapSection){
+
+            for(let mapCol of mapRow){
+
+                mapCol.sprite.draw(ctx, mapCol.x, mapCol.y, mapCol.frame[0], mapCol.frame[1]);
+                mapCol.sprite.draw(ctx, mapCol.x + 16, mapCol.y, mapCol.frame[0], mapCol.frame[1]);
+                mapCol.sprite.draw(ctx, mapCol.x, mapCol.y + 16, mapCol.frame[0], mapCol.frame[1]);
+                mapCol.sprite.draw(ctx, mapCol.x + 16, mapCol.y + 16, mapCol.frame[0], mapCol.frame[1]);
+
+            }
+
+        }
+
+    }
+
     log(){
         //if(!window.getGlobalValue('SceneLogEnable')) return;
         console.log('[SCENE '+this.name+'] ', ...arguments);
