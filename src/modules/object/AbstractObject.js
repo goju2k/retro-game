@@ -1,9 +1,13 @@
+import BaseClass from "@/modules/base/BaseClass";
+
 import AcMove from '@/modules/action/AcMove'
 
-class AbstractObject {
+class AbstractObject extends BaseClass{
 
     //생성자
     constructor(info){
+
+        super();
 
         //id
         this._uid = performance.now();

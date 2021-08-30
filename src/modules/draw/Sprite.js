@@ -1,3 +1,5 @@
+import BaseClass from "@/modules/base/BaseClass";
+
 let imageCache = {};
 window.imageCache = imageCache;
 const getImage = async (imageSrc, thisObject, callback) => {
@@ -27,10 +29,12 @@ const createImage = async (imageSrc) => {
 
 //Sprite
 //이미지 자원의 관리와 draw 기능을 제공
-class Sprite {
+class Sprite extends BaseClass{
 
     //생성자
     constructor(imageSrc, frameWidth, frameHeight, scale){
+
+        super();
 
         this.imageLoaded = false;
 

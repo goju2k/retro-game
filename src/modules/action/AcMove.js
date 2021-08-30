@@ -1,8 +1,10 @@
-import math from "@/modules/util/math";
+import BaseClass from "@/modules/base/BaseClass";
 
-class AcMove {
+class AcMove extends BaseClass{
 
     constructor(targetObject){
+
+        super();
         
         //속도
         this.speed = targetObject.speed?targetObject.speed:140; //1초에 기본 140픽셀
@@ -41,7 +43,7 @@ class AcMove {
         this.moveDirectionH = this.moveDisX > 0;
         this.moveDirectionV = this.moveDisY > 0;
 
-        this.moveDis = math.getDistance(this.moveDisX, this.moveDisY);
+        this.moveDis = this.$math.getDistance(this.moveDisX, this.moveDisY);
 
     }
 

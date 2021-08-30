@@ -7,6 +7,8 @@ import num from '@/modules/const/num.js'
 
 import device from '@/game/config/device.js'
 
+import globalVar from "@/modules/base/GlobalVar";
+
 //앱 생성
 const app = createApp(App);
 
@@ -18,6 +20,9 @@ app.config.globalProperties.$res = {};
 
 //device config 로딩
 app.config.globalProperties.$device = device;
+
+//class global 변수에 vue global 셋팅
+globalVar.$vue = app.config.globalProperties;
 
 //앱 실행
 app.mount('#app')

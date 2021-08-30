@@ -1,8 +1,12 @@
+import BaseClass from "@/modules/base/BaseClass";
+
 import Sprite from "@/modules/draw/Sprite"
-class Animation {
+class Animation extends BaseClass{
 
     //생성자
     constructor(dataSrc, initAnimationName){
+
+        super();
 
         //메타데이터 로드
         const aniMeta = require('@/assets/data/animation/'+dataSrc).default;

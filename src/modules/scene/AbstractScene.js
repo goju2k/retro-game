@@ -1,7 +1,11 @@
-class AbstractScene {
+import BaseClass from "@/modules/base/BaseClass";
+
+class AbstractScene extends BaseClass{
     
     //생성자
     constructor(status){
+
+        super();
         
         //상태객체
         this.status = status || {};
