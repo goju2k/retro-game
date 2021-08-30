@@ -16,18 +16,7 @@ export default {
         GameManager
     },
     created:function(){
-
-        const arr = [];
-        for(let i = 0 ; i < 10000 ; i++){
-            arr[i] = i;
-        }
-
-        let now = performance.now();
-        for(let aa in arr){
-            arr[aa]++;
-        }
-        console.log('for => '+(performance.now() - now)+' ms');
-
+        
         //우클릭 방지
         window.addEventListener('contextmenu', (e)=>{
             e.preventDefault();
