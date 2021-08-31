@@ -6,10 +6,12 @@ class AcMove extends BaseClass{
 
         super();
         
-        //속도
-        this.speed = targetObject.speed?targetObject.speed:140; //1초에 기본 140픽셀
-        this.speedMs = this.speed / 1000; //ms 당 이동속도
+        //대상 object
+        this.targetObject = targetObject;
 
+        //초기화
+        this.initSpeed();
+        
         //중간변수
         this.movex = 0; //이동 목표 x
         this.movey = 0; //이동 목표 y
@@ -25,9 +27,14 @@ class AcMove extends BaseClass{
         //상태
         this.status = 0; // 0:준비 1:실행중
 
-        //대상 object
-        this.targetObject = targetObject;
+    }
+
+    initSpeed() {
         
+        //속도
+        this.speed = this.targetObject.speed?this.targetObject.speed:20; //1초에 기본 120픽셀
+        this.speedMs = this.speed / 1000; //ms 당 이동속도
+
     }
 
     moveSetup(targetX, targetY){

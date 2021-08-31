@@ -16,6 +16,8 @@ class Turtle extends AbstractObject{
 
         this.thinkTime = 3000;
         this.thinkCurrTime = 0;
+        this.noActionTime = 4000;
+        this.noActionCurrTime = 4000;
 
         //시야 반경 (반지름)
         this.visibleRadius = 100;
@@ -34,15 +36,16 @@ class Turtle extends AbstractObject{
         //상태
         this.status = 0;
 
-        console.log("this.$getMapData()", this.$getMapData());
-        console.log("this.$getMap()", this.$getMap());
-        
+        //속도 초기화
+        this.setSpeed(50);
+
     }
 
     //계산
     calc(ctx, gapTime, keyInput){
 
         this.thinkCurrTime += gapTime;
+        this.noActionCurrTime += gapTime;
 
         //생각중...
         this.think();
@@ -64,6 +67,7 @@ class Turtle extends AbstractObject{
                 this.animation.pose.setAnimation('pose');
                 this.action = 0;
                 this.status = 0;
+                this.setSpeed(50); //속도원래대로
             }else{
                 this.currAction.moveDirectionH==1?this.animation.pose.setAnimation('run_right'):this.animation.pose.setAnimation('run_left');
             }
@@ -78,10 +82,12 @@ class Turtle extends AbstractObject{
         this.animation.pose.play(ctx, gapTime, this.x, this.y);
 
         //시야 반경 그리기
-        ctx.beginPath();
-        ctx.strokeStyle = this.status == 2?'red':'lightgreen';
-        ctx.arc(this.visibleX, this.visibleY, this.visibleRadius, 0, this.$math.PI2);
-        ctx.stroke();
+        if (this.action == 1) {
+            ctx.beginPath();
+            ctx.strokeStyle = this.status == 2?'red':'lightgreen';
+            ctx.arc(this.visibleX, this.visibleY, this.visibleRadius, 0, this.$math.PI2);
+            ctx.stroke();
+        }
         
     }
 
@@ -95,7 +101,7 @@ class Turtle extends AbstractObject{
         //생각 인터벌 1초 + 알파
         if(this.thinkCurrTime > this.thinkTime){
             this.thinkCurrTime = 0;
-            this.thinkTime = 500;// + math.random(1000);
+            this.thinkTime = 160;// + math.random(1000);
         }else{
             return;
         }
@@ -109,17 +115,28 @@ class Turtle extends AbstractObject{
             )){
                 this.setTarget(this.$g.player.x, this.$g.player.y);
                 this.status = 2; //적발견
+                this.setSpeed(100); //속도두배
                 break;
             }
 
         }
 
         if (this.status != 2 && this.action == 0) {
-            this.status = 1;
-            this.setTarget(
-                this.$math.random(this.$getMapData().width),
-                this.$math.random(this.$getMapData().height),
-            );
+
+            //로밍 인터벌
+            if (this.noActionCurrTime > this.noActionTime) {
+                
+                this.noActionCurrTime = 0;
+                this.noActionTime = 2000 + this.$math.random(4000);
+                
+                this.status = 1;
+                this.setTarget(
+                    this.$math.random(this.$getMapData().width),
+                    this.$math.random(this.$getMapData().height),
+                );
+
+            }
+
         }
 
     }
@@ -136,6 +153,11 @@ class Turtle extends AbstractObject{
 
         this.setMove(x, y);
         this.action = 1;
+    }
+
+    setSpeed(speed) {
+        this.speed = speed;
+        this.actionObject[1].initSpeed();
     }
 
 }
