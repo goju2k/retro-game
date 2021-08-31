@@ -27,11 +27,13 @@ class ScTraining extends AbstractScene{
             x:100,y:100,speed:150,
         });
 
+        this.$g.player = this.player; //global set
+
         //monster
         this.mosters = [
             //new Turtle({x:math.random(550),y:math.random(300), speed:80}),
         ];
-        for(let i=0 ; i<50 ; i++){
+        for(let i=0 ; i<1 ; i++){
             this.mosters.push(new Turtle({x:this.$math.random(550),y:this.$math.random(300), speed:Math.floor(20+this.$math.random(120))}));
         }
         this.monTime = 2000;
@@ -42,7 +44,6 @@ class ScTraining extends AbstractScene{
     calc(ctx, gapTime, keyInput){
 
         for(let mon of this.mosters){
-            mon.setTarget(this.player.x, this.player.y);
             mon.calc(ctx, gapTime, keyInput);
         }
 

@@ -67,6 +67,9 @@ const control = {
             this.animation.pose.setAnimation('pose');
         }
 
+        //충돌박스 업데이트
+        this.updateCollider();
+
     },
     
     //player 임시메소드

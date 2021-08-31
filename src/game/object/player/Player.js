@@ -19,6 +19,14 @@ class Player extends AbstractObject{
         //키보드컨트롤 주입
         Object.assign(this, keyControl);
 
+        this.colliderOffset = {
+            boxList:[
+                [6, 1, 22, 30]
+            ],
+        }
+
+        this.updateCollider();
+
     }
 
     //계산
@@ -37,6 +45,9 @@ class Player extends AbstractObject{
 
                 //이동 계산
                 this.currAction.calc(gapTime);
+                
+                //충돌박스 업데이트
+                this.updateCollider();
 
                 //이동 애니메이션 결정
                 if(this.currAction.status == 0){

@@ -26,6 +26,9 @@ class AbstractObject extends BaseClass{
         this.zindex = 1;
 
         //충돌박스 설정
+        this.colliderOffset = {
+            boxList:[]
+        };
         this.collider = {
             boxList:[]
         };
@@ -60,6 +63,29 @@ class AbstractObject extends BaseClass{
         this.currAction = this.actionObject[this.action];
 
         this.currAction.moveSetup(targetX, targetY);
+
+    }
+
+    updateCollider(){
+
+        let i = 0;
+        let box;
+        for(let offset of this.colliderOffset.boxList){
+
+            box = this.collider.boxList[i];
+            if(!box){
+                box = [];
+                this.collider.boxList[i] = box;
+            }
+
+            box[0] = this.x + offset[0];
+            box[1] = this.y + offset[1];
+            box[2] = box[0] + offset[2];
+            box[3] = box[1] + offset[3];
+
+            i+=1;
+            
+        }
 
     }
 
