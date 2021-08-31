@@ -13,13 +13,7 @@ class MyMath {
     }
 
     checkCrossBoxAndCircle(x, y, x2, y2, circlex, circley, radius) {
-            
-        let l = x2 - x;
-        let m;
-        let s;
-
-        let xdiff1;
-        let xdiff2;
+        
         let disT;
 
         let line = this.localArr;
@@ -35,21 +29,14 @@ class MyMath {
                 line[0] = x, line[1] = y2, line[2] = x, line[3] = y;
             }
 
-            xdiff1 = line[0] - circlex;
-            xdiff2 = line[2] - circlex;
-
-            if(xdiff1 > xdiff2){
-                m = this.getDistance(xdiff1, line[1] - circley);
-                s = this.getDistance(xdiff2, line[3] - circley);
-            }else{
-                m = this.getDistance(xdiff2, line[3] - circley);
-                s = this.getDistance(xdiff1, line[1] - circley);
-            }
-
-            disT = m * s / l;
-
+            disT = this.getDistance(line[0] - circlex, line[1] - circley);
             if(radius >= disT){
                 return true;
+            }else{
+                disT = this.getDistance(line[2] - circlex, line[3] - circley);
+                if(radius >= disT){
+                    return true;
+                }
             }
 
         }
