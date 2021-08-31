@@ -19,12 +19,14 @@ class Player extends AbstractObject{
         //키보드컨트롤 주입
         Object.assign(this, keyControl);
 
+        //충돌박스 offset 설정
         this.colliderOffset = {
             boxList:[
                 [6, 1, 22, 30]
             ],
         }
 
+        //충돌박스 업데이트
         this.updateCollider();
 
     }
