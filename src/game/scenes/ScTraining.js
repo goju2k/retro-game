@@ -22,6 +22,8 @@ class ScTraining extends AbstractScene{
             trainingMap.spriteMap.h,
         ));
 
+        this.mapLoaded = false;
+
         //player
         this.player = new Player({
             x:100,y:100,speed:150,
@@ -33,7 +35,7 @@ class ScTraining extends AbstractScene{
         this.mosters = [
             //new Turtle({x:math.random(550),y:math.random(300), speed:80}),
         ];
-        for(let i=0 ; i<1 ; i++){
+        for(let i=0 ; i<200 ; i++){
             this.mosters.push(new Turtle({x:this.$math.random(550),y:this.$math.random(300), speed:Math.floor(20+this.$math.random(120))}));
         }
         this.monTime = 2000;
@@ -61,8 +63,13 @@ class ScTraining extends AbstractScene{
 
     draw(ctx, gapTime, keyInput){
         
+        if(!this.mapLoaded){
+            this.initMap();
+            this.mapLoaded = true;
+        }
+
         //맵 그리기
-        this.drawMap(ctx);
+        this.drawMap(ctx, gapTime, keyInput);
 
         //객체 그리기
         for(let mon of this.mosters){
