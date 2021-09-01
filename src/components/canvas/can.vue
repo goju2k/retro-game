@@ -91,6 +91,12 @@ export default {
             this.ctx.webkitImageSmoothingEnabled = false;
             this.ctx.msImageSmoothingEnabled = false;
             this.ctx.imageSmoothingEnabled = false;
+
+            //clear size
+            this.clearX = -500;
+            this.clearY = -500
+            this.clearW = this.config.gameWidth + 500
+            this.clearH = this.config.gameHeight + 500
                         
         });
         
@@ -183,17 +189,15 @@ export default {
             }
 
             //canvas 클리어
-            // this.ctx.clearRect(-500, -500, this.$refs.can.width, this.$refs.can.height);
-            this.ctx.fillStyle = 'lightgrey';
-            this.ctx.fillRect(0, 0, this.config.gameWidth, this.config.gameHeight);
-
+            this.ctx.clearRect(this.clearX, this.clearY, this.clearW, this.clearH);
+            
             //임시 좌표 디버그
-            this.ctx.fillStyle = 'black';
-            for(let i = 0, len =  this.config.gameWidth; i < len ; i = i + 32){
-                for(let k = 0, len2 = this.config.gameHeight ; k < len2 ; k = k + 32){
-                    this.ctx.fillRect(i, k, 1, 1);
-                }
-            }
+            // this.ctx.fillStyle = 'black';
+            // for(let i = 0, len =  this.config.gameWidth; i < len ; i = i + 32){
+            //     for(let k = 0, len2 = this.config.gameHeight ; k < len2 ; k = k + 32){
+            //         this.ctx.fillRect(i, k, 1, 1);
+            //     }
+            // }
 
             //draw 처리
             this.callback(this.ctx, this.$refs.can, this.drawNextGapTime);
