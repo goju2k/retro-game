@@ -20,7 +20,7 @@ class Turtle extends AbstractObject{
         this.noActionCurrTime = 4000;
 
         //시야 반경 (반지름)
-        this.visibleRadius = 100;
+        this.visibleRadius = 60;
         this.updateVisible(); //시야 위치 업데이트
 
         //충돌박스 offset 설정
@@ -45,7 +45,7 @@ class Turtle extends AbstractObject{
     calc(ctx, gapTime, keyInput){
 
         this.thinkCurrTime += gapTime;
-        this.noActionCurrTime += gapTime;
+        this.action == 0?this.noActionCurrTime += gapTime:null;
 
         //생각중...
         this.think();
@@ -79,15 +79,29 @@ class Turtle extends AbstractObject{
     //그리기
     draw(ctx, gapTime, keyInput){
 
-        this.animation.pose.play(ctx, gapTime, this.x, this.y);
-
         //시야 반경 그리기
         if (this.action == 1) {
+
             ctx.beginPath();
-            ctx.strokeStyle = this.status == 2?'red':'lightgreen';
+            ctx.strokeStyle = this.status == 2?'red':'green';
             ctx.arc(this.visibleX, this.visibleY, this.visibleRadius, 0, this.$math.PI2);
             ctx.stroke();
+
+            //이동목표 표현
+            ctx.beginPath();
+            ctx.strokeStyle = 'green';
+            ctx.moveTo(this.x + 16, this.y + 16);
+            ctx.lineTo(this.atkTarget[0] + 16, this.atkTarget[1] + 16);
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.fillStyle = 'green';
+            ctx.arc(this.atkTarget[0] + 16, this.atkTarget[1] + 16, 2, 0, this.$math.PI2);
+            ctx.fill();
+
         }
+
+        this.animation.pose.play(ctx, gapTime, this.x, this.y);
         
     }
 
@@ -115,7 +129,7 @@ class Turtle extends AbstractObject{
             )){
                 this.setTarget(this.$g.player.x, this.$g.player.y);
                 this.status = 2; //적발견
-                this.setSpeed(100); //속도두배
+                this.setSpeed(70); //속도증가
                 break;
             }
 
@@ -127,12 +141,12 @@ class Turtle extends AbstractObject{
             if (this.noActionCurrTime > this.noActionTime) {
                 
                 this.noActionCurrTime = 0;
-                this.noActionTime = 2000 + this.$math.random(4000);
+                this.noActionTime = 2000 + this.$math.random(3000);
                 
                 this.status = 1;
                 this.setTarget(
-                    this.$math.random(this.$getMapData().width),
-                    this.$math.random(this.$getMapData().height),
+                    32 + this.$math.random(this.$getMapData().width - 64),
+                    32 + this.$math.random(this.$getMapData().height - 64),
                 );
 
             }
