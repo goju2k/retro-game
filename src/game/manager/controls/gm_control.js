@@ -25,9 +25,8 @@ const controls = {
     },
     mousemove(e){
         
-        if(!this.mousedownFlag){
-            return;
-        }
+        this.keyInputObject.mouseX = Math.floor(e.offsetX * this.scaleX);
+        this.keyInputObject.mouseY = Math.floor(e.offsetY * this.scaleY);
         
         // this.ctx.clearRect(0, 0, this.canvasConfig.gameWidth, this.canvasConfig.gameHeight);
         // this.ctx.translate(e.movementX, e.movementY);

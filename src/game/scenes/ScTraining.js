@@ -91,8 +91,10 @@ class ScTraining extends AbstractScene{
     }
 
     keydown(e){
+        
         //this.log('keydown', e);
-        this.action = 0;
+        this.player.keydown(e);
+
     }
 
 }

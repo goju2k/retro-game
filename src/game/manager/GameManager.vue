@@ -80,6 +80,8 @@ export default {
             right:false,
             up:false,
             down:false,
+            mouseX:0,
+            mouseY:0,
         };
 
         //씬 불러오기
