@@ -113,28 +113,28 @@ class AcMove extends BaseClass{
 
             }else{
 
-                for (let mon of this.$g.monsters){
+                // for (let mon of this.$g.monsters){
 
-                    for(let box of mon.collider.boxList) {
+                //     for(let box of mon.collider.boxList) {
     
-                        //me 의 충돌박스
-                        for(let mybox of this.targetObject.collider.boxList){
+                //         //me 의 충돌박스
+                //         for(let mybox of this.targetObject.collider.boxList){
         
-                            if(this.$math.checkCrossBox(
-                                box[0], box[1], box[2], box[3],
-                                mybox[0], mybox[1], mybox[2], mybox[3],
-                            )){
-                                this.targetObject.x = this.targetObject.prevX;
-                                this.targetObject.y = this.targetObject.prevY;
-                                this.status = 0; //준비
-                                return;
-                            }
+                //             if(this.$math.checkCrossBox(
+                //                 box[0], box[1], box[2], box[3],
+                //                 mybox[0], mybox[1], mybox[2], mybox[3],
+                //             )){
+                //                 this.targetObject.x = this.targetObject.prevX;
+                //                 this.targetObject.y = this.targetObject.prevY;
+                //                 this.status = 0; //준비
+                //                 return;
+                //             }
         
-                        }
+                //         }
 
-                    }
+                //     }
 
-                }
+                // }
 
             }
 

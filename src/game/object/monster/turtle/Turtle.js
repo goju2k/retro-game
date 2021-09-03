@@ -14,7 +14,7 @@ class Turtle extends AbstractObject{
 
         this.atkTarget = [-1,-1];
 
-        this.thinkTime = 3000;
+        this.thinkTime = 1000 + this.$math.random(2000);
         this.thinkCurrTime = 0;
         this.noActionTime = 4000;
         this.noActionCurrTime = 4000;
@@ -69,7 +69,15 @@ class Turtle extends AbstractObject{
                 this.status = 0;
                 this.setSpeed(50); //속도원래대로
             }else{
-                this.currAction.moveDirectionH==1?this.animation.pose.setAnimation('run_right'):this.animation.pose.setAnimation('run_left');
+                if(this.status == 2){
+                    this.currAction.moveDirectionH==1
+                    ?this.animation.pose.setAnimation('run_right_fast')
+                    :this.animation.pose.setAnimation('run_left_fast');
+                }else{
+                    this.currAction.moveDirectionH==1
+                    ?this.animation.pose.setAnimation('run_right')
+                    :this.animation.pose.setAnimation('run_left');
+                }
             }
 
         }
@@ -80,7 +88,7 @@ class Turtle extends AbstractObject{
     draw(ctx, gapTime, keyInput){
 
         //시야 반경 그리기
-        if (this.action == 1) {
+        if (false && this.action == 1) {
 
             ctx.beginPath();
             ctx.strokeStyle = this.status == 2?'red':'green';
@@ -115,7 +123,7 @@ class Turtle extends AbstractObject{
         //생각 인터벌 1초 + 알파
         if(this.thinkCurrTime > this.thinkTime){
             this.thinkCurrTime = 0;
-            this.thinkTime = 160;// + math.random(1000);
+            this.thinkTime = 170 + math.random(170);
         }else{
             return;
         }

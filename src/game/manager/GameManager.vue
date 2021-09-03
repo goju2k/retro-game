@@ -67,8 +67,8 @@ export default {
         // this.canvasConfig.drawFps = 60;
         
         //display 크기 셋팅
-        this.canvasConfig.displayWidth = 800;
-        this.canvasConfig.displayHeight = 480;
+        this.canvasConfig.displayWidth = 1600;
+        this.canvasConfig.displayHeight = 900;
 
 
         //컨트롤 변수

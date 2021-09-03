@@ -32,7 +32,7 @@ export default {
         'run_right' : {
             map:'turtle',
             loopCnt:-1,
-            delay:80,
+            delay:200,
             frames:[
                 {
                     pos:[0,1],
@@ -51,7 +51,7 @@ export default {
         'run_left' : {
             map:'turtle',
             loopCnt:-1,
-            delay:80,
+            delay:200,
             flipX:-1,
             frames:[
                 {
@@ -65,6 +65,45 @@ export default {
                 },
                 {
                     pos:[3,1],
+                },
+            ],
+        },
+        'run_right_fast' : {
+            map:'turtle',
+            loopCnt:-1,
+            delay:100,
+            frames:[
+                {
+                    pos:[0,2],
+                },
+                {
+                    pos:[1,2],
+                },
+                {
+                    pos:[2,2],
+                },
+                {
+                    pos:[3,2],
+                },
+            ],
+        },
+        'run_left_fast' : {
+            map:'turtle',
+            loopCnt:-1,
+            delay:100,
+            flipX:-1,
+            frames:[
+                {
+                    pos:[0,2],
+                },
+                {
+                    pos:[1,2],
+                },
+                {
+                    pos:[2,2],
+                },
+                {
+                    pos:[3,2],
                 },
             ],
         },
