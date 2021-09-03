@@ -128,7 +128,7 @@ export default {
             //UI 그리기
             ctx.fillStyle = "red";
             ctx.font = '10px monospace';
-            ctx.fillText('현재 적 '+this.currScene.mosters.length+' 마리', this.canvasConfig.gameWidth - 90, 15);
+            ctx.fillText('현재 적 '+this.currScene.monsters.length+' 마리', this.canvasConfig.gameWidth - 90, 15);
             
         },
 

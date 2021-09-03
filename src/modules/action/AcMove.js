@@ -83,11 +83,64 @@ class AcMove extends BaseClass{
             this.targetObject.x = this.movex;
             this.targetObject.y = this.movey;
         }else{
+
+            this.targetObject.prevX = this.targetObject.x;
+            this.targetObject.prevY = this.targetObject.y;
             this.targetObject.x = this.moveDirectionH == 1?Math.min(this.targetObject.x, this.movex):Math.max(this.targetObject.x, this.movex);
             this.targetObject.y = this.moveDirectionV == 1?Math.min(this.targetObject.y, this.movey):Math.max(this.targetObject.y, this.movey);
+
+            //충돌체크
+            if(this.$g.player != this.targetObject){
+
+                for (let box of this.$g.player.collider.boxList) {
+    
+                    //me 의 충돌박스
+                    for(let mybox of this.targetObject.collider.boxList){
+    
+                        if(this.$math.checkCrossBox(
+                            box[0], box[1], box[2], box[3],
+                            mybox[0], mybox[1], mybox[2], mybox[3],
+                        )){
+                            this.targetObject.x = this.targetObject.prevX;
+                            this.targetObject.y = this.targetObject.prevY;
+                            this.status = 0; //준비
+                            break;
+                        }
+    
+                    }
+        
+                }
+
+            }else{
+
+                for (let mon of this.$g.monsters){
+
+                    for(let box of mon.collider.boxList) {
+    
+                        //me 의 충돌박스
+                        for(let mybox of this.targetObject.collider.boxList){
+        
+                            if(this.$math.checkCrossBox(
+                                box[0], box[1], box[2], box[3],
+                                mybox[0], mybox[1], mybox[2], mybox[3],
+                            )){
+                                this.targetObject.x = this.targetObject.prevX;
+                                this.targetObject.y = this.targetObject.prevY;
+                                this.status = 0; //준비
+                                return;
+                            }
+        
+                        }
+
+                    }
+
+                }
+
+            }
+
         }
 
-        if(this.movex == this.targetObject.x && this.movey == this.targetObject.y){
+        if(this.status !== 0 && this.movex == this.targetObject.x && this.movey == this.targetObject.y){
 
             this.status = 0; //준비
 

@@ -32,11 +32,13 @@ class ScTraining extends AbstractScene{
         this.$g.player = this.player; //global set
 
         //monster
-        this.mosters = [
+        this.monsters = [
             //new Turtle({x:math.random(550),y:math.random(300), speed:80}),
         ];
-        for(let i=0 ; i<200 ; i++){
-            this.mosters.push(new Turtle({x:this.$math.random(550),y:this.$math.random(300), speed:Math.floor(20+this.$math.random(120))}));
+        this.$g.monsters = this.monsters;
+
+        for(let i=0 ; i<5 ; i++){
+            this.monsters.push(new Turtle({x:this.$math.random(550),y:this.$math.random(300), speed:Math.floor(20+this.$math.random(120))}));
         }
         this.monTime = 2000;
         this.monCurrTime = 0;
@@ -45,14 +47,14 @@ class ScTraining extends AbstractScene{
 
     calc(ctx, gapTime, keyInput){
 
-        for(let mon of this.mosters){
+        for(let mon of this.monsters){
             mon.calc(ctx, gapTime, keyInput);
         }
 
         this.player.calc(ctx, gapTime, keyInput);
 
         // if(this.monCurrTime >= this.monTime){
-        //     this.mosters.push(new Turtle({x:this.$math.random(550),y:this.$math.random(300), speed:Math.floor(20+this.$math.random(120))}));
+        //     this.monsters.push(new Turtle({x:this.$math.random(550),y:this.$math.random(300), speed:Math.floor(20+this.$math.random(120))}));
         //     this.monTime = 100 + this.$math.random(200);
         //     this.monCurrTime = 0;
         // }else{
@@ -72,7 +74,7 @@ class ScTraining extends AbstractScene{
         this.drawMap(ctx, gapTime, keyInput);
 
         //객체 그리기
-        for(let mon of this.mosters){
+        for(let mon of this.monsters){
             mon.draw(ctx, gapTime, keyInput);
         }
 
