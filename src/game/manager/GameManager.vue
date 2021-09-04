@@ -1,6 +1,6 @@
 <template>
 
-    <div style="border:1px solid green;">
+    <div class="default" ref="gm">
 
         <can ref="can" :config="canvasConfig" :callback="draw"
         @mousedown.stop.prevent="mousedown"
@@ -143,5 +143,11 @@ export default {
 </script>
 
 <style>
-
+.default{
+    border:1px solid green;
+    cursor:url('../../assets/img/ui/cursor/cursor-default.png'), auto;
+}
+.cursor-attack{
+    cursor:url('../../assets/img/ui/cursor/cursor-attack.png'), auto;
+}
 </style>

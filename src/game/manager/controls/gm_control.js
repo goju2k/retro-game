@@ -19,6 +19,8 @@ const controls = {
 
         this.$refs.ta_event.focus();
 
+        this.$refs.gm.classList.remove('cursor-attack');
+
         if(this.$refs.can.active && this.currScene && this.currScene.mousedown){
             this.currScene.mousedown.call(this.currScene, this.createEventObject(e));
         }
@@ -60,6 +62,10 @@ const controls = {
         }
 
         this.keyInputObject.keydown = true;
+
+        if(e.key === 'a'){
+            this.$refs.gm.classList.add('cursor-attack');
+        }
 
         //scene 에 이벤트 전송
         if(this.$refs.can.active && this.currScene && this.currScene.keydown){

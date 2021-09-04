@@ -92,10 +92,7 @@ class Player extends AbstractObject{
         if(this.action == this.ACTION_MOVE){
             this.animation.arrow.play(ctx, gapTime, this.currAction.movex, this.currAction.movey + 16);
         }
-        if(this.keyA){
-            this.sprite.attackArrow.draw(ctx, keyInput.mouseX - 8, keyInput.mouseY - 8, 0, 0)
-        }
-
+        
     }
 
     //이벤트
