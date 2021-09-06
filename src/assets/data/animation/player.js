@@ -8,8 +8,14 @@ export default {
             src:'object/player/move.png',
             w:32,h:32,
         },
+        attack:{
+            src:'object/player/attack.png',
+            w:32,h:32,
+        },
     },
     def:{
+
+        //제자리
         'pose' : {
             map:'move',
             loopCnt:-1,
@@ -29,25 +35,7 @@ export default {
                 },
             ],
         },
-        'pose' : {
-            map:'move',
-            loopCnt:-1,
-            delay:100,
-            frames:[
-                {
-                    pos:[5,18],
-                },
-                {
-                    pos:[6,18],
-                },
-                {
-                    pos:[7,18],
-                },
-                {
-                    pos:[8,18],
-                },
-            ],
-        },
+        //이동
         'run_up' : {
             map:'move',
             loopCnt:-1,
@@ -251,5 +239,53 @@ export default {
                 }
             ],
         },
+
+        //공격
+        'attack_right' : {
+            map:'attack',
+            loopCnt:-1,
+            delay:80,
+            frames:[
+                {
+                    pos:[0,13],
+                },
+                {
+                    pos:[1,13],
+                },
+                {
+                    pos:[2,13],
+                },
+                {
+                    pos:[3,13],
+                },
+                {
+                    pos:[4,13],
+                },
+            ],
+        },
+        'attack_left' : {
+            map:'attack',
+            loopCnt:-1,
+            delay:80,
+            flipX:-1,
+            frames:[
+                {
+                    pos:[0,13],
+                },
+                {
+                    pos:[1,13],
+                },
+                {
+                    pos:[2,13],
+                },
+                {
+                    pos:[3,13],
+                },
+                {
+                    pos:[4,13],
+                },
+            ],
+        },
+
     },
 }

@@ -3,6 +3,8 @@ import Animation from "@/modules/draw/Animation"
 import Sprite from "@/modules/draw/Sprite"
 
 import keyControl from "@/game/object/player/control/keyboard.js"
+
+import AcMoveAttack from '@/modules/action/AcMoveAttack'
 class Player extends AbstractObject{
 
     //생성자
@@ -16,11 +18,6 @@ class Player extends AbstractObject{
         //정지/이동 애니메이션
         this.animation.pose = new Animation('player.js', 'pose');
         this.animation.arrow = new Animation('positionArrow.js'); 
-        this.sprite.attackArrow = new Sprite(
-            'effect/arrow/attack-arrow.png',
-            16,
-            16,
-        )
         
         //키보드컨트롤 주입
         if(this.controller === 0){
@@ -48,6 +45,10 @@ class Player extends AbstractObject{
         //액션 상수
         this.ACTION_READY = 0;
         this.ACTION_MOVE = 1;
+        this.ACTION_ATTACK = 2;
+
+        //액션 셋팅
+        this.actionObject[this.ACTION_ATTACK] = new AcMoveAttack(this);
 
     }
 
@@ -73,11 +74,31 @@ class Player extends AbstractObject{
 
                 //이동 애니메이션 결정
                 if(this.currAction.status == this.STAT_READY){
+
                     this.animation.pose.setAnimation('pose');
+                    //this.animation.pose.setAnimation('attack_right');
+                    
                     this.action = this.ACTION_READY;
+
                 }else{
+
                     this.currAction.moveDirectionH==1?this.animation.pose.setAnimation('run_right'):this.animation.pose.setAnimation('run_left');
+
                 }
+
+            }else if(this.action == this.ACTION_ATTACK){
+                
+                //적 사거리 도달 계산
+
+                //1. 도달하면 공격상태로..
+
+                //2. 사거리 없으면 계속 이동
+
+                //이동 계산
+
+                //충돌박스 업데이트
+
+                //이동 애니메이션 결정
 
             }
 
@@ -106,7 +127,7 @@ class Player extends AbstractObject{
                 this.keyA = false;
 
                 this.animation.arrow.setAnimation('position', true);
-                this.setMove(e.x - 15, e.y - 32);
+                this.setMove(e.x - 15, e.y - 32, this.ACTION_MOVE);
 
             }else if(e.button === 0){ //좌클릭
 
@@ -116,6 +137,7 @@ class Player extends AbstractObject{
                     this.keyA = false;
 
                     //공격 설정
+                    this.setMove(e.x - 15, e.y - 32, this.ACTION_ATTACK);
                     
                 }
 

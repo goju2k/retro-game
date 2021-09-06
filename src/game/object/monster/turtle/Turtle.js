@@ -173,7 +173,7 @@ class Turtle extends AbstractObject{
         this.atkTarget[0] = x;
         this.atkTarget[1] = y;
 
-        this.setMove(x, y);
+        this.setMove(x, y, 1);
         this.action = 1;
     }
 

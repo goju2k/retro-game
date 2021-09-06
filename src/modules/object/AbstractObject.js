@@ -57,9 +57,9 @@ class AbstractObject extends BaseClass{
 
     }
 
-    setMove(targetX, targetY){
+    setMove(targetX, targetY, action){
 
-        this.action = 1;
+        this.action = action;
         this.currAction = this.actionObject[this.action];
 
         this.currAction.moveSetup(targetX, targetY);
