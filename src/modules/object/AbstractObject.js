@@ -61,10 +61,9 @@ class AbstractObject extends BaseClass{
 
     }
 
-    hit(damage){
-        this.life = Math.max(0, this.life - damage);
+    hit(obj){
+        this.life = Math.max(0, this.life - obj.attackPower);
         this.lifePer = Math.floor(32 * this.life / 100);
-        console.log(damage+' hit!!');
     }
 
     setMove(targetX, targetY, action){

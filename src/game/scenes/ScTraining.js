@@ -37,7 +37,7 @@ class ScTraining extends AbstractScene{
         ];
         this.$g.monsters = this.monsters;
 
-        for(let i=0 ; i<20 ; i++){
+        for(let i=0 ; i<2 ; i++){
             this.monsters.push(new Turtle({x:this.$math.random(550),y:this.$math.random(300), speed:Math.floor(20+this.$math.random(120))}));
         }
         this.monTime = 2000;
@@ -47,11 +47,11 @@ class ScTraining extends AbstractScene{
 
     calc(ctx, gapTime, keyInput){
 
+        this.player.calc(ctx, gapTime, keyInput);
+        
         for(let mon of this.monsters){
             mon.calc(ctx, gapTime, keyInput);
         }
-
-        this.player.calc(ctx, gapTime, keyInput);
 
         if(this.monCurrTime >= this.monTime){
             this.monsters.push(new Turtle({x:this.$math.random(550),y:this.$math.random(300), speed:Math.floor(20+this.$math.random(120))}));

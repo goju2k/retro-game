@@ -107,5 +107,44 @@ export default {
                 },
             ],
         },
+        'hit_right' : {
+            map:'turtle',
+            loopCnt: -1,
+            delay:50,
+            frames:[
+                {
+                    pos:[0,2],
+                },
+                {
+                    pos:[1,2],
+                },
+                {
+                    pos:[2,2],
+                },
+                {
+                    pos:[3,2],
+                },
+            ],
+        },
+        'hit_left' : {
+            map:'turtle',
+            loopCnt: -1,
+            delay: 50,
+            flipX:-1,
+            frames:[
+                {
+                    pos:[0,2],
+                },
+                {
+                    pos:[1,2],
+                },
+                {
+                    pos:[2,2],
+                },
+                {
+                    pos:[3,2],
+                },
+            ],
+        },
     },
 }

@@ -116,7 +116,7 @@ class Player extends AbstractObject{
                         if(!this.attackFlag){
                             this.attackFlag = true;
                             for(let enemy of this.currAction.enemyList){
-                                enemy.hit(this.attackPower * this.$math.random(3));
+                                enemy.hit(this);
                             }
                         }
 

@@ -33,8 +33,14 @@ class Turtle extends AbstractObject{
         //충돌박스 업데이트
         this.updateCollider();
 
+        //상태 상수
+        this.STAT_READY = 0;
+        this.STAT_MOVE = 1;
+        this.STAT_FIND_ENEMY = 2;
+        this.STAT_HIT = 3;
+
         //상태
-        this.status = 0;
+        this.status = this.STAT_READY;
 
         //속도 초기화
         this.setSpeed(50);
@@ -44,48 +50,104 @@ class Turtle extends AbstractObject{
     //계산
     calc(ctx, gapTime, keyInput){
 
+        //체력 없으면 사라짐
         if(this.life == 0){
             this.$g.monsters.splice(this.$g.monsters.indexOf(this), 1);
             return;
         }
 
         this.thinkCurrTime += gapTime;
-        this.action == 0?this.noActionCurrTime += gapTime:null;
-
-        //생각중...
-        this.think();
-
-        //action : 이동
-        if(this.action == 1){
-
-            //이동 계산
-            this.currAction.calc(gapTime);
-
-            //시야 위치 업데이트
-            this.updateVisible()
+        this.action == 0 ? this.noActionCurrTime += gapTime : null;
+        
+        //피격시
+        if (this.status == this.STAT_HIT) {
             
-            //충돌박스 업데이트
-            this.updateCollider();
+            if (this.action == 1) {
+                
+                //이동 계산
+                this.currAction.calc(gapTime);
 
-            //이동 애니메이션 결정
-            if(this.currAction.status == 0){
-                this.animation.pose.setAnimation('pose');
-                this.action = 0;
-                this.status = 0;
-                this.setSpeed(50); //속도원래대로
-            }else{
-                if(this.status == 2){
-                    this.currAction.moveDirectionH==1
-                    ?this.animation.pose.setAnimation('run_right_fast')
-                    :this.animation.pose.setAnimation('run_left_fast');
-                }else{
-                    this.currAction.moveDirectionH==1
-                    ?this.animation.pose.setAnimation('run_right')
-                    :this.animation.pose.setAnimation('run_left');
+                //시야 위치 업데이트
+                this.updateVisible()
+                
+                //충돌박스 업데이트
+                this.updateCollider();
+
+                if (this.currAction.status == 0) {
+
+                    this.animation.pose.setAnimation('pose');
+                    this.action = 0;
+                    this.status = this.STAT_READY;
+                    this.setSpeed(50); //속도원래대로
+
+                } else {
+
+                    this.currAction.moveDirectionH!=1
+                        ?this.animation.pose.setAnimation('hit_right')
+                        :this.animation.pose.setAnimation('hit_left');
+                    
                 }
+
+            }
+
+        } else {
+
+            //생각중...
+            this.think();
+
+            //action : 이동
+            if(this.action == 1){
+    
+                //이동 계산
+                this.currAction.calc(gapTime);
+    
+                //시야 위치 업데이트
+                this.updateVisible()
+                
+                //충돌박스 업데이트
+                this.updateCollider();
+    
+                //이동 애니메이션 결정
+                if(this.currAction.status == 0){
+                    this.animation.pose.setAnimation('pose');
+                    this.action = 0;
+                    this.status = this.STAT_READY;
+                    this.setSpeed(50); //속도원래대로
+                }else{
+                    if(this.status == this.STAT_FIND_ENEMY){
+                        this.currAction.moveDirectionH==1
+                        ?this.animation.pose.setAnimation('run_right_fast')
+                        :this.animation.pose.setAnimation('run_left_fast');
+                    }else{
+                        this.currAction.moveDirectionH==1
+                        ?this.animation.pose.setAnimation('run_right')
+                        :this.animation.pose.setAnimation('run_left');
+                    }
+                }
+
             }
 
         }
+
+    }
+
+    //공격 당했을때
+    hit(obj) {
+
+        if (this.status == this.STAT_HIT) {
+            return;
+        }
+        
+        super.hit(obj);
+
+        //피격 상태
+        this.status = this.STAT_HIT;
+
+        //액션 좌표 설정
+        this.setTarget(obj.x + 50, obj.y + 50);
+
+        //날라가는 속도
+        this.setSpeed(150);
 
     }
 
@@ -143,14 +205,14 @@ class Turtle extends AbstractObject{
                 this.visibleX, this.visibleY, this.visibleRadius
             )){
                 this.setTarget(this.$g.player.x, this.$g.player.y);
-                this.status = 2; //적발견
+                this.status = this.STAT_FIND_ENEMY; //적발견
                 this.setSpeed(70); //속도증가
                 break;
             }
 
         }
 
-        if (this.status != 2 && this.action == 0) {
+        if (this.status != this.STAT_FIND_ENEMY && this.action == 0) {
 
             //로밍 인터벌
             if (this.noActionCurrTime > this.noActionTime) {
@@ -158,7 +220,7 @@ class Turtle extends AbstractObject{
                 this.noActionCurrTime = 0;
                 this.noActionTime = 2000 + this.$math.random(3000);
                 
-                this.status = 1;
+                this.status = this.STAT_MOVE;
                 this.setTarget(
                     32 + this.$math.random(this.$getMapData().width - 64),
                     32 + this.$math.random(this.$getMapData().height - 64),
