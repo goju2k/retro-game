@@ -44,6 +44,11 @@ class Turtle extends AbstractObject{
     //계산
     calc(ctx, gapTime, keyInput){
 
+        if(this.life == 0){
+            this.$g.monsters.splice(this.$g.monsters.indexOf(this), 1);
+            return;
+        }
+
         this.thinkCurrTime += gapTime;
         this.action == 0?this.noActionCurrTime += gapTime:null;
 
@@ -86,6 +91,8 @@ class Turtle extends AbstractObject{
 
     //그리기
     draw(ctx, gapTime, keyInput){
+
+        super.draw(ctx, gapTime, keyInput);
 
         //시야 반경 그리기
         if (false && this.action == 1) {

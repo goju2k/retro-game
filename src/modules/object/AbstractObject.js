@@ -55,6 +55,16 @@ class AbstractObject extends BaseClass{
 
         this.currAction;
 
+        //액션 스탯
+        this.life = 100;
+        this.lifePer = 32;
+
+    }
+
+    hit(damage){
+        this.life = Math.max(0, this.life - damage);
+        this.lifePer = Math.floor(32 * this.life / 100);
+        console.log(damage+' hit!!');
     }
 
     setMove(targetX, targetY, action){
@@ -96,7 +106,17 @@ class AbstractObject extends BaseClass{
 
     //그리기
     draw(ctx, gapTime, keyInput){
+
+        ctx.strokeStyle = 'black';
+        ctx.strokeRect(this.x, this.y - 5, 32, 3);
         
+        ctx.fillStyle = 'red';
+        ctx.fillRect(this.x, this.y - 5, 32, 3);
+
+        ctx.fillStyle = 'lightgreen';
+        //console.log('aa:', aa, this.life);
+        ctx.fillRect(this.x, this.y - 5, this.lifePer, 3);
+
     }
 
 }

@@ -244,7 +244,7 @@ export default {
         'attack_right' : {
             map:'attack',
             loopCnt:-1,
-            delay:80,
+            delay:120,
             frames:[
                 {
                     pos:[0,13],
@@ -257,16 +257,18 @@ export default {
                 },
                 {
                     pos:[3,13],
+                    delay:150,
                 },
                 {
                     pos:[4,13],
+                    delay:10,
                 },
             ],
         },
         'attack_left' : {
             map:'attack',
             loopCnt:-1,
-            delay:80,
+            delay:120,
             flipX:-1,
             frames:[
                 {
@@ -280,9 +282,11 @@ export default {
                 },
                 {
                     pos:[3,13],
+                    delay:150,
                 },
                 {
                     pos:[4,13],
+                    delay:10,
                 },
             ],
         },

@@ -61,6 +61,7 @@ class Player extends AbstractObject{
             }
         });
         this.attackRange = 20;
+        this.attackPower = 45;
 
     }
 
@@ -108,6 +109,20 @@ class Player extends AbstractObject{
 
                     //공격 애니메이션 결정
                     this.currAction.moveDirectionH==1?this.animation.pose.setAnimation('attack_right'):this.animation.pose.setAnimation('attack_left');
+
+                    //3프레임일때 공격
+                    if(this.animation.pose.currFrameNo == 3 && this.currAction.enemyList && this.currAction.enemyList.length > 0){
+
+                        if(!this.attackFlag){
+                            this.attackFlag = true;
+                            for(let enemy of this.currAction.enemyList){
+                                enemy.hit(this.attackPower * this.$math.random(3));
+                            }
+                        }
+
+                    }else{
+                        this.attackFlag = false;
+                    }
 
                 } else {
 

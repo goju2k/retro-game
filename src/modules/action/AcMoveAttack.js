@@ -6,6 +6,8 @@ class AcMoveAttack extends AcMove{
         super(targetObject);
 
         this.updateVisible();
+
+        this.enemyList = [];
         
     }
 
@@ -21,7 +23,7 @@ class AcMoveAttack extends AcMove{
         
         //공격범위 적 체크
         let enemyFound = false;
-        this.enemyList = this.enemyList||[];
+        this.enemyList.length = 0;
         for (let mon of this.$g.monsters) {
 
             for (let box of mon.collider.boxList) {
@@ -31,19 +33,12 @@ class AcMoveAttack extends AcMove{
                     this.attackRangeX, this.attackRangeY, this.attackRange
                 )) {
                     enemyFound = true;
+                    this.enemyList.push(mon);
                     break;
-                    // this.enemyList.push();
-                    // this.setTarget(this.$g.player.x, this.$g.player.y);
-                    // this.status = 2; //적발견
-                    // this.setSpeed(70); //속도증가
                 }
 
             }
 
-            if (enemyFound) {
-                break;
-            }
-            
         }
 
         //적 있으면 공격중 상태로 변경
@@ -51,6 +46,8 @@ class AcMoveAttack extends AcMove{
             this.status = 2; //공격중
             return;
         }
+
+        this.status = 1;
 
         //적 없으면 계속 이동
         super.calc(gapTime);

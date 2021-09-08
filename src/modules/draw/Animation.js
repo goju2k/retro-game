@@ -40,6 +40,7 @@ class Animation extends BaseClass{
         this.currAni = null; //현재 재생 애니메이션
         this.currSprite = null; //현재 대상 스프라이트
         this.currFrame = null; //현재 재생 프레임
+        this.currFrameNo = -1; //현재 재생 프레임 no
 
         //초기 애니메이션 지정
         if(initAnimationName){
@@ -72,7 +73,7 @@ class Animation extends BaseClass{
 
         if(frameNo === undefined){
 
-            frameNo = this.currAni.frames.indexOf(this.currFrame) + 1;
+            frameNo = this.currFrameNo + 1;
 
             //마지막 프레임이면
             if(frameNo === this.currAni.frames.length){
@@ -97,6 +98,7 @@ class Animation extends BaseClass{
         }
 
         this.currFrame = this.currAni.frames[frameNo]; //현재 재생 프레임
+        this.currFrameNo = frameNo;
         this.currDelay = this.currFrame.delay?this.currFrame.delay:this.currAni.delay;
 
     }
