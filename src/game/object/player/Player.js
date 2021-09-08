@@ -49,6 +49,18 @@ class Player extends AbstractObject{
 
         //액션 셋팅
         this.actionObject[this.ACTION_ATTACK] = new AcMoveAttack(this);
+        
+        //액션 스탯
+        Object.defineProperty(this, 'attackRange', {
+            get: function () {
+                return this.attackRangeVal;
+            },
+            set: function (val) {
+                this.attackRangeVal = val;
+                this.actionObject[this.ACTION_ATTACK].attackRange = this.attackRangeVal;
+            }
+        });
+        this.attackRange = 20;
 
     }
 
@@ -88,17 +100,34 @@ class Player extends AbstractObject{
 
             }else if(this.action == this.ACTION_ATTACK){
                 
-                //적 사거리 도달 계산
-
-                //1. 도달하면 공격상태로..
-
-                //2. 사거리 없으면 계속 이동
-
                 //이동 계산
+                this.currAction.calc(gapTime);
 
-                //충돌박스 업데이트
+                //공격중이면..
+                if (this.currAction.status == 2) {
 
-                //이동 애니메이션 결정
+                    //공격 애니메이션 결정
+                    this.currAction.moveDirectionH==1?this.animation.pose.setAnimation('attack_right'):this.animation.pose.setAnimation('attack_left');
+
+                } else {
+
+                    //충돌박스 업데이트
+                    this.updateCollider();
+
+                    //이동 애니메이션 결정
+                    if(this.currAction.status == this.STAT_READY){
+
+                        this.animation.pose.setAnimation('pose');
+                        
+                        this.action = this.ACTION_READY;
+
+                    }else{
+
+                        this.currAction.moveDirectionH==1?this.animation.pose.setAnimation('run_right'):this.animation.pose.setAnimation('run_left');
+
+                    }
+
+                }
 
             }
 
@@ -112,6 +141,11 @@ class Player extends AbstractObject{
         this.animation.pose.play(ctx, gapTime, this.x, this.y);
         if(this.action == this.ACTION_MOVE){
             this.animation.arrow.play(ctx, gapTime, this.currAction.movex, this.currAction.movey + 16);
+        } else if(this.action == this.ACTION_ATTACK) {
+            ctx.beginPath();
+            ctx.strokeStyle = 'orange';
+            ctx.arc(this.currAction.attackRangeX, this.currAction.attackRangeY, this.attackRange, 0, this.$math.PI2);
+            ctx.stroke();
         }
         
     }

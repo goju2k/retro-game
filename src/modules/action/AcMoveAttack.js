@@ -4,120 +4,58 @@ class AcMoveAttack extends AcMove{
     constructor(targetObject){
 
         super(targetObject);
+
+        this.updateVisible();
         
     }
 
-    initSpeed() {
-        
-        //속도
-        this.speed = this.targetObject.speed?this.targetObject.speed:20; //1초에 기본 120픽셀
-        this.speedMs = this.speed / 1000; //ms 당 이동속도
-
+    updateVisible(){
+        this.attackRangeX = this.targetObject.x + 15;
+        this.attackRangeY = this.targetObject.y + 15;
     }
 
-    moveSetup(targetX, targetY){
-
-        this.status = 1; //실행중
-
-        this.movex = targetX;
-        this.movey = targetY;
-
-        this.moveDisX = this.movex - this.targetObject.x;
-        this.moveDisY = this.movey - this.targetObject.y;
-
-        this.moveDirectionH = this.moveDisX > 0;
-        this.moveDirectionV = this.moveDisY > 0;
-
-        this.moveDis = this.$math.getDistance(this.moveDisX, this.moveDisY);
-
-    }
-
-    calc(gapTime){
-
-        this.moveCurrDis = this.speedMs * gapTime;
-            
-        this.currDisRatio = this.moveCurrDis / this.moveDis;
-
-        this.moveToX = this.moveDisX * this.currDisRatio;
-        this.moveToY = this.moveDisY * this.currDisRatio;
-
-        if((this.moveToX > 0 && this.targetObject.x < this.movex)
-        || (this.moveToX < 0 && this.targetObject.x > this.movex)
-        ){
-            this.targetObject.x += this.moveToX;
-        }else{
-            this.moveToX = 0;
-        }
-
-        if((this.moveToY > 0 && this.targetObject.y < this.movey)
-        || (this.moveToY < 0 && this.targetObject.y > this.movey)
-        ){
-            this.targetObject.y += this.moveToY;
-        }else{
-            this.moveToY = 0;
-        }
-
-        if(this.movex == 0 && this.movey == 0){
-            this.targetObject.x = this.movex;
-            this.targetObject.y = this.movey;
-        }else{
-
-            this.targetObject.prevX = this.targetObject.x;
-            this.targetObject.prevY = this.targetObject.y;
-            this.targetObject.x = this.moveDirectionH == 1?Math.min(this.targetObject.x, this.movex):Math.max(this.targetObject.x, this.movex);
-            this.targetObject.y = this.moveDirectionV == 1?Math.min(this.targetObject.y, this.movey):Math.max(this.targetObject.y, this.movey);
-
-            //충돌체크
-            if(this.$g.player != this.targetObject){
-
-                for (let box of this.$g.player.collider.boxList) {
-    
-                    //me 의 충돌박스
-                    for(let mybox of this.targetObject.collider.boxList){
-    
-                        if(this.$math.checkCrossBox(
-                            box[0], box[1], box[2], box[3],
-                            mybox[0], mybox[1], mybox[2], mybox[3],
-                        )){
-                            this.targetObject.x = this.targetObject.prevX;
-                            this.targetObject.y = this.targetObject.prevY;
-                            this.status = 0; //준비
-                            break;
-                        }
-    
-                    }
+    calc(gapTime) {
         
+        //공격반경 위치 업데이트
+        this.updateVisible();
+        
+        //공격범위 적 체크
+        let enemyFound = false;
+        this.enemyList = this.enemyList||[];
+        for (let mon of this.$g.monsters) {
+
+            for (let box of mon.collider.boxList) {
+
+                if(this.$math.checkCrossBoxAndCircle(
+                    box[0], box[1], box[2], box[3],
+                    this.attackRangeX, this.attackRangeY, this.attackRange
+                )) {
+                    enemyFound = true;
+                    break;
+                    // this.enemyList.push();
+                    // this.setTarget(this.$g.player.x, this.$g.player.y);
+                    // this.status = 2; //적발견
+                    // this.setSpeed(70); //속도증가
                 }
-
-            }else{
-
-                // for (let mon of this.$g.monsters){
-
-                //     for(let box of mon.collider.boxList) {
-    
-                //         //me 의 충돌박스
-                //         for(let mybox of this.targetObject.collider.boxList){
-        
-                //             if(this.$math.checkCrossBox(
-                //                 box[0], box[1], box[2], box[3],
-                //                 mybox[0], mybox[1], mybox[2], mybox[3],
-                //             )){
-                //                 this.targetObject.x = this.targetObject.prevX;
-                //                 this.targetObject.y = this.targetObject.prevY;
-                //                 this.status = 0; //준비
-                //                 return;
-                //             }
-        
-                //         }
-
-                //     }
-
-                // }
 
             }
 
+            if (enemyFound) {
+                break;
+            }
+            
         }
 
+        //적 있으면 공격중 상태로 변경
+        if (enemyFound) {
+            this.status = 2; //공격중
+            return;
+        }
+
+        //적 없으면 계속 이동
+        super.calc(gapTime);
+
+        //목적지 도착하면 정지
         if(this.status !== 0 && this.movex == this.targetObject.x && this.movey == this.targetObject.y){
 
             this.status = 0; //준비
