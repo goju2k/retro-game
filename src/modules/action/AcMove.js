@@ -90,7 +90,7 @@ class AcMove extends BaseClass{
             this.targetObject.y = this.moveDirectionV == 1?Math.min(this.targetObject.y, this.movey):Math.max(this.targetObject.y, this.movey);
 
             //충돌체크
-            if(this.$g.player != this.targetObject){
+            if(this.$g.player != this.targetObject && this.targetObject.status != this.targetObject.STAT_HIT){
 
                 for (let box of this.$g.player.collider.boxList) {
     

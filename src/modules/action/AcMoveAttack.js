@@ -16,7 +16,7 @@ class AcMoveAttack extends AcMove{
         this.attackRangeY = this.targetObject.y + 15;
     }
 
-    calc(gapTime) {
+    calc(gapTime, attackEnd) {
         
         //공격반경 위치 업데이트
         this.updateVisible();
@@ -48,6 +48,10 @@ class AcMoveAttack extends AcMove{
         }
 
         this.status = 1;
+
+        if(!attackEnd){
+            return;
+        }
 
         //적 없으면 계속 이동
         super.calc(gapTime);

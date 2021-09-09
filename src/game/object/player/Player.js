@@ -62,6 +62,7 @@ class Player extends AbstractObject{
         });
         this.attackRange = 20;
         this.attackPower = 45;
+        this.attackEnd = true;
 
     }
 
@@ -102,16 +103,24 @@ class Player extends AbstractObject{
             }else if(this.action == this.ACTION_ATTACK){
                 
                 //이동 계산
-                this.currAction.calc(gapTime);
+                this.currAction.calc(gapTime, this.attackEnd);
 
                 //공격중이면..
-                if (this.currAction.status == 2) {
+                if (this.currAction.status == 2
+                ||  (
+                        (    this.animation.pose.currAni.name == 'attack_right'
+                        ||  this.animation.pose.currAni.name == 'attack_left')
+                        &&  this.animation.pose.currFrameNo != 0
+                    )
+                ) {
+
+                    this.attackEnd = false;
 
                     //공격 애니메이션 결정
                     this.currAction.moveDirectionH==1?this.animation.pose.setAnimation('attack_right'):this.animation.pose.setAnimation('attack_left');
 
-                    //3프레임일때 공격
-                    if(this.animation.pose.currFrameNo == 3 && this.currAction.enemyList && this.currAction.enemyList.length > 0){
+                    //2번째 프레임일때 공격
+                    if(this.animation.pose.currFrameNo == 1 && this.currAction.enemyList && this.currAction.enemyList.length > 0){
 
                         if(!this.attackFlag){
                             this.attackFlag = true;
@@ -125,6 +134,8 @@ class Player extends AbstractObject{
                     }
 
                 } else {
+
+                    this.attackEnd = true;
 
                     //충돌박스 업데이트
                     this.updateCollider();

@@ -50,9 +50,19 @@ class Turtle extends AbstractObject{
     //계산
     calc(ctx, gapTime, keyInput){
 
-        //체력 없으면 사라짐
+        //체력 없으면 1초후 사라짐
         if(this.life == 0){
-            this.$g.monsters.splice(this.$g.monsters.indexOf(this), 1);
+
+            if(!this.deadTime){
+                this.deadTime = gapTime;
+            }else{
+                this.deadTime += gapTime;
+            }
+
+            if(this.deadTime >= 1000){
+                this.$g.monsters.splice(this.$g.monsters.indexOf(this), 1);
+            }
+
             return;
         }
 
@@ -144,7 +154,10 @@ class Turtle extends AbstractObject{
         this.status = this.STAT_HIT;
 
         //액션 좌표 설정
-        this.setTarget(obj.x + 50, obj.y + 50);
+        this.setTarget(
+            this.x + ((30 + this.$math.random(50)) * (this.x > obj.x?1:-1)),
+            this.y
+        );
 
         //날라가는 속도
         this.setSpeed(150);
@@ -177,7 +190,7 @@ class Turtle extends AbstractObject{
             ctx.fill();
 
         }
-
+        
         this.animation.pose.play(ctx, gapTime, this.x, this.y);
         
     }

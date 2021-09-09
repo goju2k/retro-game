@@ -248,20 +248,20 @@ export default {
             frames:[
                 {
                     pos:[0,13],
+                    delay:250,
                 },
                 {
                     pos:[1,13],
+                    delay:20,
                 },
                 {
                     pos:[2,13],
                 },
                 {
                     pos:[3,13],
-                    delay:150,
                 },
                 {
                     pos:[4,13],
-                    delay:10,
                 },
             ],
         },
@@ -273,20 +273,20 @@ export default {
             frames:[
                 {
                     pos:[0,13],
+                    delay:250,
                 },
                 {
                     pos:[1,13],
+                    delay:20,
                 },
                 {
                     pos:[2,13],
                 },
                 {
                     pos:[3,13],
-                    delay:150,
                 },
                 {
                     pos:[4,13],
-                    delay:10,
                 },
             ],
         },
