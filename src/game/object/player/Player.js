@@ -17,7 +17,7 @@ class Player extends AbstractObject{
 
         //정지/이동 애니메이션
         this.animation.pose = new Animation('player.js', 'pose');
-        this.animation.arrow = new Animation('positionArrow.js'); 
+        this.animation.arrow = new Animation('positionArrow.js');
         
         //키보드컨트롤 주입
         if(this.controller === 0){
@@ -61,8 +61,15 @@ class Player extends AbstractObject{
             }
         });
         this.attackRange = 20;
-        this.attackPower = 45;
+        this.attackPower = 30;
         this.attackEnd = true;
+
+        //효과
+        this.effectRes = {
+            0:'explosion.js'
+        }
+
+        this.effectList = [];
 
     }
 
@@ -125,7 +132,11 @@ class Player extends AbstractObject{
                         if(!this.attackFlag){
                             this.attackFlag = true;
                             for(let enemy of this.currAction.enemyList){
+                                if(enemy.status == enemy.STAT_HIT){
+                                    continue;
+                                }
                                 enemy.hit(this);
+                                this.effectList.push({res:0,frame:'exp', x:enemy.x + 10 - this.$math.random(20)  , y:enemy.y - (50 - this.$math.random(20))});
                             }
                         }
 
@@ -173,7 +184,23 @@ class Player extends AbstractObject{
             ctx.arc(this.currAction.attackRangeX, this.currAction.attackRangeY, this.attackRange, 0, this.$math.PI2);
             ctx.stroke();
         }
-        
+
+        //이펙트
+        for(let effect of this.effectList){
+
+            if(effect.ani){
+                if(!effect.ani.playing){
+                    this.effectList.splice(this.effectList.indexOf(effect), 1);
+                    continue;
+                }
+            }else{
+                effect.ani = new Animation(this.effectRes[effect.res], effect.frame);
+            }
+            
+            effect.ani.play(ctx, gapTime, effect.x, effect.y);
+
+        }
+
     }
 
     //이벤트

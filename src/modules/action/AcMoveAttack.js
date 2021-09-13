@@ -26,6 +26,10 @@ class AcMoveAttack extends AcMove{
         this.enemyList.length = 0;
         for (let mon of this.$g.monsters) {
 
+            if(mon.status == mon.STAT_HIT){
+                continue;
+            }
+
             for (let box of mon.collider.boxList) {
 
                 if(this.$math.checkCrossBoxAndCircle(

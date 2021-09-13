@@ -12,6 +12,9 @@ class Turtle extends AbstractObject{
         //정지/이동 애니메이션
         this.animation.pose = new Animation('turtle.js', 'pose');
 
+        //폭발
+        this.animation.explo;
+
         this.atkTarget = [-1,-1];
 
         this.thinkTime = 1000 + this.$math.random(2000);
@@ -155,7 +158,7 @@ class Turtle extends AbstractObject{
 
         //액션 좌표 설정
         this.setTarget(
-            this.x + ((30 + this.$math.random(50)) * (this.x > obj.x?1:-1)),
+            this.x + ((10 + this.$math.random(10)) * (this.x > obj.x?1:-1)),
             this.y
         );
 
@@ -191,7 +194,14 @@ class Turtle extends AbstractObject{
 
         }
         
-        this.animation.pose.play(ctx, gapTime, this.x, this.y);
+        if(this.life == 0){
+            if(!this.animation.explo){
+                this.animation.explo = new Animation('explosionLarge.js', 'exp')
+            }
+            this.animation.explo.play(ctx, gapTime, this.x - 16, this.y - 16);
+        }else{
+            this.animation.pose.play(ctx, gapTime, this.x, this.y);
+        }
         
     }
 

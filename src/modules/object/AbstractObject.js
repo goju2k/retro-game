@@ -62,7 +62,7 @@ class AbstractObject extends BaseClass{
     }
 
     hit(obj){
-        this.life = Math.max(0, this.life - obj.attackPower);
+        this.life = Math.max(0, this.life - (obj.attackPower/2 + (obj.attackPower*this.$math.random(2))));
         this.lifePer = Math.floor(32 * this.life / 100);
     }
 
@@ -106,15 +106,19 @@ class AbstractObject extends BaseClass{
     //그리기
     draw(ctx, gapTime, keyInput){
 
-        ctx.strokeStyle = 'black';
-        ctx.strokeRect(this.x, this.y - 5, 32, 3);
-        
-        ctx.fillStyle = 'red';
-        ctx.fillRect(this.x, this.y - 5, 32, 3);
+        if(this.life !== 0){
 
-        ctx.fillStyle = 'lightgreen';
-        //console.log('aa:', aa, this.life);
-        ctx.fillRect(this.x, this.y - 5, this.lifePer, 3);
+            ctx.strokeStyle = 'black';
+            ctx.strokeRect(this.x, this.y - 5, 32, 3);
+            
+            ctx.fillStyle = 'red';
+            ctx.fillRect(this.x, this.y - 5, 32, 3);
+    
+            ctx.fillStyle = 'lightgreen';
+            //console.log('aa:', aa, this.life);
+            ctx.fillRect(this.x, this.y - 5, this.lifePer, 3);
+
+        }
 
     }
 

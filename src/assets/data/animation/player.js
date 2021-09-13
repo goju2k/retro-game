@@ -247,21 +247,21 @@ export default {
             delay:120,
             frames:[
                 {
-                    pos:[0,13],
+                    pos:[0,10],
                     delay:250,
                 },
                 {
-                    pos:[1,13],
+                    pos:[1,10],
                     delay:20,
                 },
                 {
-                    pos:[2,13],
+                    pos:[2,10],
                 },
                 {
-                    pos:[3,13],
+                    pos:[3,10],
                 },
                 {
-                    pos:[4,13],
+                    pos:[4,10],
                 },
             ],
         },
@@ -272,21 +272,21 @@ export default {
             flipX:-1,
             frames:[
                 {
-                    pos:[0,13],
+                    pos:[0,10],
                     delay:250,
                 },
                 {
-                    pos:[1,13],
+                    pos:[1,10],
                     delay:20,
                 },
                 {
-                    pos:[2,13],
+                    pos:[2,10],
                 },
                 {
-                    pos:[3,13],
+                    pos:[3,10],
                 },
                 {
-                    pos:[4,13],
+                    pos:[4,10],
                 },
             ],
         },
