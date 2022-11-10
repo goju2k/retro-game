@@ -4,7 +4,7 @@ const controls = {
         return {
             x:e.offsetX?Math.floor(e.offsetX * this.scaleX):null,
             y:e.offsetY?Math.floor(e.offsetY * this.scaleY):null,
-            key:e.key,
+            key:e.code ? e.code.replace('Key','').toLowerCase() : '',
             button:e.button,
             ctrlKey:e.ctrlKey,
             shiftKey:e.shiftKey,
@@ -25,6 +25,23 @@ const controls = {
             this.currScene.mousedown.call(this.currScene, this.createEventObject(e));
         }
     },
+    touchstart(e){ //mousedown 에 대응하는 모바일용 임시 컨트롤
+      const touch = e.touches[0]
+      if(!touch){
+        return
+      }
+      this.log('touchstart original ('+touch.clientX+','+touch.clientY+')', e);
+      this.mousedownFlag = true;
+
+      //this.$refs.ta_event.focus();
+
+      this.$refs.gm.classList.remove('cursor-attack');
+
+      if(this.$refs.can.active && this.currScene && this.currScene.mousedown){
+          this.currScene.mousedown.call(this.currScene, this.createEventObject({button:2, offsetX:touch.clientX, offsetY:touch.clientY}));
+      }
+    },
+    
     mousemove(e){
         
         this.keyInputObject.mouseX = Math.floor(e.offsetX * this.scaleX);
@@ -63,7 +80,7 @@ const controls = {
 
         this.keyInputObject.keydown = true;
 
-        if(e.key === 'a'){
+        if(e.code === 'KeyA'){
             this.$refs.gm.classList.add('cursor-attack');
         }
 
