@@ -4,6 +4,8 @@
 
         <can ref="can" :config="canvasConfig" :callback="draw"
         @mousedown.stop.prevent="mousedown"
+        @touchstart.stop.prevent="touchstart"
+        @touchend.stop.prevent="mouseup"
         @mousemove.stop.prevent="mousemove"
         @mouseup.stop.prevent="mouseup"
         ></can>
