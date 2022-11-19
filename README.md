@@ -1,5 +1,8 @@
 # pixeltest
 
+## Test Site
+https://storage.googleapis.com/retro-game-test-deploy/index.html
+
 ## Project setup
 ```
 npm install
